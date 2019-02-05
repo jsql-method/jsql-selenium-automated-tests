@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Suite" verbose="3" thread-count="5" >
+    <test name="Test on Chrome">
+        <parameter name="browser" value="Chrome" />
+        <parameter name="user" value="company admin" />
+        <!--<packages>-->
+            <!--<package name="TestJsql" />-->
+        <!--</packages>-->
+        <classes>
+            <class name="TestJsql.AddApiTest2" />
+            <class name="TestJsql.AddAdminTest2" />
+            <class name="TestJsql.AddNewMemberTest2" />
+            <class name="TestJsql.CopyToClipboardTest2" />
+            <class name="TestJsql.EditProfileTest2" />
+            <class name="TestJsql.ElementsPresentDependingOnRoleTest2" />
+            <class name="TestJsql.Register2" />
+        </classes>
+    </test>
+    <test name="Test on Firefox">
+        <parameter name="browser" value="Firefox" />
+        <parameter name="user" value="company admin" />
+        <classes>
+            <class name="TestJsql.AddAdminTest2" />
+            <class name="TestJsql.AddApiTest2" />
+            <class name="TestJsql.AddNewMemberTest2" />
+            <class name="TestJsql.CopyToClipboardTest2" />
+            <class name="TestJsql.EditProfileTest2" />
+            <class name="TestJsql.ElementsPresentDependingOnRoleTest2" />
+            <class name="TestJsql.Register2" />
+        </classes>
+    </test>
+    <!--<test name="Test on Edge">-->
+        <!--<parameter name="browser" value="Edge" />-->
+        <!--<parameter name="user" value="company admin" />-->
+        <!--<classes>-->
+            <!--<class name="TestJsql.AddAdminTest2" />-->
+            <!--<class name="TestJsql.AddApiTest2" />-->
+            <!--<class name="TestJsql.AddNewMemberTest2" />-->
+            <!--<class name="TestJsql.CopyToClipboardTest2" />-->
+            <!--<class name="TestJsql.EditProfileTest2" />-->
+            <!--<class name="TestJsql.ElementsPresentDependingOnRoleTest2" />-->
+            <!--<class name="TestJsql.Register2" />-->
+        <!--</classes>-->
+    <!--</test>-->
+    <!--<test name="Test on Opera">-->
+        <!--<parameter name="browser" value="Opera" />-->
+        <!--<parameter name="user" value="company admin" />-->
+        <!--<classes>-->
+            <!--<class name="TestJsql.AddAdminTest2" />-->
+            <!--<class name="TestJsql.AddApiTest2" />-->
+            <!--<class name="TestJsql.AddNewMemberTest2" />-->
+            <!--<class name="TestJsql.CopyToClipboardTest2" />-->
+            <!--<class name="TestJsql.EditProfileTest2" />-->
+            <!--<class name="TestJsql.ElementsPresentDependingOnRoleTest2" />-->
+            <!--<class name="TestJsql.Register2" />-->
+        <!--</classes>-->
+    <!--</test>-->
+</suite>
+         <!--Suite-->
