@@ -1,3 +1,8 @@
+ /*
+  * Copyright (c) 2018 JSQL Sp.z.o.o. (Ltd, LLC) www.jsql.it
+  * Licensed under the Commercial license, see www.jsql.it/terms-and-conditions
+  */
+
 package TestJsql;
 
 import org.openqa.selenium.By;
@@ -19,21 +24,21 @@ public class SetUp {
     public static WebDriver driver;
 
     public static void clickWhenReady(By locator) {
-        WebDriverWait wait = new WebDriverWait(driver, 20);
+        WebDriverWait wait = new WebDriverWait(driver, 10);
         WebElement element = wait.until(ExpectedConditions.elementToBeClickable(locator));
         element.click();
     }
 
     public static WebElement getWhenVisible(By locator) {
         WebElement element = null;
-        WebDriverWait wait = new WebDriverWait(driver, 20);
+        WebDriverWait wait = new WebDriverWait(driver, 10);
         element = wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
         return element;
     }
 
     public static boolean isElementPresent(By locator) {
         try {
-            WebDriverWait wait = new WebDriverWait(driver, 20);
+            WebDriverWait wait = new WebDriverWait(driver, 10);
             wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
             return true;
         } catch (Exception e) {
@@ -86,12 +91,12 @@ public class SetUp {
         String userPassword = null;
         if (user.equalsIgnoreCase("company admin")) {
             userEmail = "test@test";
-            userPassword = "test123#";
+            userPassword = "test123";
         } else if (user.equalsIgnoreCase("admin")) {
-            userEmail = "test@test";
+            userEmail = "admin@2";
             userPassword = "test123#";
         } else if (user.equalsIgnoreCase("app admin")) {
-            userEmail = "test@test";
+            userEmail = "admin@nowy";
             userPassword = "test123#";
         } else if (user.equalsIgnoreCase("app dev")) {
             userEmail = "app@dev.pl";

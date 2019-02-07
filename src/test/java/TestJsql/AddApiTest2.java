@@ -1,3 +1,8 @@
+ /*
+  * Copyright (c) 2018 JSQL Sp.z.o.o. (Ltd, LLC) www.jsql.it
+  * Licensed under the Commercial license, see www.jsql.it/terms-and-conditions
+  */
+
 package TestJsql;
 
 import org.apache.commons.io.FileUtils;
@@ -49,6 +54,7 @@ public class AddApiTest2 {
 
             //delete new api
             clickWhenReady(By.xpath("(//a[contains(.,'selenium')])[1]"));
+            Thread.sleep(500);
             clickWhenReady(By.xpath("//button[contains(.,'Delete')]"));
             Thread.sleep(500);
             clickWhenReady(By.xpath("//button[contains(.,'Yes')]"));

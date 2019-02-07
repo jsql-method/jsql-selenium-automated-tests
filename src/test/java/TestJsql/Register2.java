@@ -1,10 +1,13 @@
+ /*
+  * Copyright (c) 2018 JSQL Sp.z.o.o. (Ltd, LLC) www.jsql.it
+  * Licensed under the Commercial license, see www.jsql.it/terms-and-conditions
+  */
+
 package TestJsql;
 
 import junit.framework.TestCase;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;

@@ -1,3 +1,8 @@
+ /*
+  * Copyright (c) 2018 JSQL Sp.z.o.o. (Ltd, LLC) www.jsql.it
+  * Licensed under the Commercial license, see www.jsql.it/terms-and-conditions
+  */
+
 package TestJsqlJunit;
 
 import TestJsqlJunit.SetUp;
@@ -47,6 +52,7 @@ public class AddApiTest {
 
         //delete new api
         clickWhenReady(By.xpath("(//a[contains(.,'selenium')])[1]"));
+        Thread.sleep(200);
         clickWhenReady(By.xpath("//button[contains(.,'Delete')]"));
         Thread.sleep(500);
         clickWhenReady(By.xpath("//button[contains(.,'Yes')]"));
@@ -54,11 +60,7 @@ public class AddApiTest {
         clickWhenReady(By.xpath("//button[contains(.,'Ok')]"));
 
         Assert.assertNotEquals(numberOfApi.size(), numberOfApiNew.size());
-//        WebDriver augmentedDriver = new Augmenter().augment(driver);
-//        File screenshot = ((TakesScreenshot)augmentedDriver).
-//                getScreenshotAs(OutputType.FILE);
-        File screenshotFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
-        FileUtils.copyFile(screenshotFile, new File("C:\\screen.png"));
+
     }
 
     @AfterClass

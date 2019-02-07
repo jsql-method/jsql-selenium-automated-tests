@@ -1,3 +1,8 @@
+ /*
+  * Copyright (c) 2018 JSQL Sp.z.o.o. (Ltd, LLC) www.jsql.it
+  * Licensed under the Commercial license, see www.jsql.it/terms-and-conditions
+  */
+
 package TestJsqlJunit;
 
 import org.openqa.selenium.By;
