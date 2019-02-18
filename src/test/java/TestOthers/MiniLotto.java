@@ -4,25 +4,19 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openqa.selenium.*;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
-import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
 
 public class MiniLotto {
 
     public static WebDriver driver;
     public String login = "dsenko";
     public String password = "Jsql1234";
-    public int num1 = 12;
-    public int num2 = 32;
-    public int num3 = 6;
-    public int num4 = 39;
+    public int num1 = 4;
+    public int num2 = 24;
+    public int num3 = 17;
+    public int num4 = 34;
     public int num5 = 21;
 
     public static void clickWhenReady(By locator) {
@@ -54,19 +48,6 @@ public class MiniLotto {
         driver = new FirefoxDriver(firefoxOptions);
         driver.manage().window().maximize();
 
-
-//        driver = new ChromeDriver();
-//        driver.manage().window().maximize();
-
-        //Chrome headless
-//        ChromeOptions chromeOptions = new ChromeOptions();
-//        chromeOptions.addArguments("--headless");
-//        driver = new ChromeDriver(chromeOptions);
-
-        //Firefox headless
-//        FirefoxOptions firefoxOptions = new FirefoxOptions();
-//        firefoxOptions.setHeadless(true);
-//        driver = new FirefoxDriver(firefoxOptions);
     }
 
     @Test
@@ -144,7 +125,7 @@ public class MiniLotto {
 
     @AfterClass
     public static void afterSuite() {
-//        driver.quit();
+        driver.quit();
     }
 }
 
