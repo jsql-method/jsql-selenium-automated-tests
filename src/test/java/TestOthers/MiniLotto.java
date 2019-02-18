@@ -19,11 +19,11 @@ public class MiniLotto {
     public static WebDriver driver;
     public String login = "dsenko";
     public String password = "Jsql1234";
-    public int num1 = 6;
-    public int num2 = 16;
-    public int num3 = 26;
+    public int num1 = 12;
+    public int num2 = 32;
+    public int num3 = 6;
     public int num4 = 39;
-    public int num5 = 41;
+    public int num5 = 21;
 
     public static void clickWhenReady(By locator) {
         WebDriverWait wait = new WebDriverWait(driver, 20);
@@ -41,35 +41,31 @@ public class MiniLotto {
     @BeforeClass
     public static void setUp() {
 
-//        FirefoxProfile geoEnabled = new FirefoxProfile();
-//        geoEnabled.setPreference("geo.enabled", true);
-//        geoEnabled.setPreference("geo.provider.use_corelocation", true);
-//        geoEnabled.setPreference("geo.prompt.testing", true);
-//        geoEnabled.setPreference("geo.prompt.testing.allow", true);
-//        FirefoxOptions firefox = new FirefoxOptions();
-//        firefox.setProfile(geoEnabled);
-//        driver = new FirefoxDriver(firefox);
-//        driver.manage().window().maximize();
-//
-//
-//        FirefoxProfile profile = new ProfilesIni().getProfile("dev");
-//        profile.setPreference("geo.wifi.uri", "file://D:/geoLocation.json");
-//        driver = new FirefoxDriver(profile);
+//        geoEnabled.setPreference("geo.wifi.uri", "C:/Users/CP24/Desktop/projekt/jsql-selenium-automated-tests/geoLocation.json");
 
-        driver = new ChromeDriver();
+        FirefoxProfile profile = new FirefoxProfile();
+        profile.setPreference("geo.enabled", true);
+        profile.setPreference("geo.provider.use_corelocation", true);
+        profile.setPreference("geo.prompt.testing", true);
+        profile.setPreference("geo.prompt.testing.allow", true);
+        FirefoxOptions firefoxOptions = new FirefoxOptions();
+        firefoxOptions.setProfile(profile);
+        firefoxOptions.setHeadless(true);
+        driver = new FirefoxDriver(firefoxOptions);
         driver.manage().window().maximize();
+
+
+//        driver = new ChromeDriver();
+//        driver.manage().window().maximize();
 
         //Chrome headless
 //        ChromeOptions chromeOptions = new ChromeOptions();
 //        chromeOptions.addArguments("--headless");
 //        driver = new ChromeDriver(chromeOptions);
 
-
         //Firefox headless
-//        FirefoxBinary firefoxBinary = new FirefoxBinary();
-//        firefoxBinary.addCommandLineOptions("--headless");
 //        FirefoxOptions firefoxOptions = new FirefoxOptions();
-//        firefoxOptions.setBinary(firefoxBinary);
+//        firefoxOptions.setHeadless(true);
 //        driver = new FirefoxDriver(firefoxOptions);
     }
 
@@ -86,9 +82,7 @@ public class MiniLotto {
         Thread.sleep(1000);
 
         //login
-        System.out.println("before zaloguj check");
         clickWhenReady(By.xpath("//a[@class='btn btn-login btn-account-header br-0'][contains(.,'Zaloguj się')]"));
-        System.out.println("zaloguj check");
 
         getWhenVisible(By.xpath("//input[@name='loginModal-username']")).sendKeys(login);
         WebElement passwordInput = driver.findElement(By.xpath("//input[@type='password']"));
@@ -101,9 +95,9 @@ public class MiniLotto {
         //go to mini lotto
         Thread.sleep(1000);
         clickWhenReady(By.xpath("//a[contains(.,'Gry LOTTO')]"));
+        Thread.sleep(500);
         clickWhenReady(By.xpath("/html/body/div[2]/div[2]/div[4]/div/div/div/div/nav/div[2]/ul/li[3]/div/ul/li[3]/a"));
 
-        System.out.println("before fill up check");
         //fill up
         clickWhenReady(By.xpath("//label[contains(@data-switch-on,'TAK')]"));
         clickWhenReady(By.xpath("(//span[contains(.,'zakład')])[4]"));
@@ -119,13 +113,9 @@ public class MiniLotto {
         getWhenVisible(By.xpath("//input[@name='boards[0][primarySelections][3]']")).sendKeys(String.valueOf(num4));
         getWhenVisible(By.xpath("//input[@name='boards[0][primarySelections][4]']")).sendKeys(String.valueOf(num5));
 
-        System.out.println("after fill up check");
-
         //confirm
         clickWhenReady(By.xpath("//button[@class='btn btn-primary'][contains(.,'POTWIERDŹ I ZAPŁAĆ')]"));
-        System.out.println("after 1st confirm check");
         clickWhenReady(By.xpath("//a[@class='btn btn-primary confirmationModal-confirmLink'][contains(.,'POTWIERDZAM I PŁACĘ')]"));
-        System.out.println("after 2st confirm check");
 
         //get coupon number and chosen numbers
         Thread.sleep(500);
@@ -154,7 +144,7 @@ public class MiniLotto {
 
     @AfterClass
     public static void afterSuite() {
-        driver.quit();
+//        driver.quit();
     }
 }
 
