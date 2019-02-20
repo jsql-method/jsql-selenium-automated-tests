@@ -25,13 +25,13 @@ public class CopyToClipboardTest2 {
     WebDriver driver;
 
     @BeforeMethod
-    @Parameters("browser")
-    public void setUp(String browser) {
+    @Parameters({"browser"})
+    public void SetUp(String browser) {
         //getDriver selenium and login into homepage
         driver = SetUp.getDriverOnlyParam(browser);
 
         WebElement email = driver.findElement(By.xpath("//input[@type='text']"));
-        email.sendKeys("app@dev.pl");
+        email.sendKeys("appdev@nextmail.info");
         WebElement password = driver.findElement(By.xpath("//input[@type='password']"));
         password.sendKeys("test123#");
         password.sendKeys(Keys.ENTER);
@@ -54,7 +54,7 @@ public class CopyToClipboardTest2 {
             clickWhenReady(By.xpath("//button[contains(.,'Ok')]"));
 
             //paste copied ApiKey somewhere else
-            driver.get("http://localhost:9090/profile");
+            driver.get("https://test.jsql.it/profile");
             WebElement input = getWhenVisible(By.xpath("//input[@id='firstName']"));
             input.clear();
             Actions action = new Actions(driver);
@@ -82,7 +82,7 @@ public class CopyToClipboardTest2 {
             Thread.sleep(1000);
 
             //Check DevKey displayed
-            clickWhenReady(By.xpath("//*[@id=\"sidebar\"]/ul/li[2]/a"));
+            clickWhenReady(By.xpath("//a[contains(.,'Developer key')]"));
             WebElement displayedDevKeyElement = getWhenVisible(By.id("developerKey"));
             String displayedDevKey = displayedDevKeyElement.getAttribute("value");
 
@@ -92,7 +92,7 @@ public class CopyToClipboardTest2 {
             clickWhenReady(By.xpath("//button[contains(.,'Ok')]"));
 
             //paste copied ApiKey somewhere else
-            driver.get("http://localhost:9090/profile");
+            driver.get("https://test.jsql.it/profile");
             WebElement input = getWhenVisible(By.xpath("//input[@id='firstName']"));
             input.clear();
             Actions action = new Actions(driver);

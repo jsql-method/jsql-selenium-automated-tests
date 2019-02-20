@@ -80,7 +80,7 @@ public class SetUp {
 
         driver.manage().window().maximize();
 
-        driver.get("http://localhost:9090/auth/login");
+        driver.get("https://test.jsql.it/auth/login");
 
         WebDriverWait wait = new WebDriverWait(driver, 10000);
         wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.tagName("input"), 0));
@@ -93,13 +93,13 @@ public class SetUp {
             userEmail = "test@test";
             userPassword = "test123";
         } else if (user.equalsIgnoreCase("admin")) {
-            userEmail = "admin@2";
+            userEmail = "admin@nextmail.info";
             userPassword = "test123#";
         } else if (user.equalsIgnoreCase("app admin")) {
-            userEmail = "admin@nowy";
+            userEmail = "appadmin@nextmail.info";
             userPassword = "test123#";
         } else if (user.equalsIgnoreCase("app dev")) {
-            userEmail = "app@dev.pl";
+            userEmail = "appdev@nextmail.info";
             userPassword = "test123#";
         }
 
@@ -146,7 +146,7 @@ public class SetUp {
         }
 
         driver.manage().window().maximize();
-        driver.get("http://localhost:9090/auth/login");
+        driver.get("https://test.jsql.it/auth/login");
 
         return driver;
     }

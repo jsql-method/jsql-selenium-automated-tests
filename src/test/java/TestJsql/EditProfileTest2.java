@@ -24,23 +24,29 @@ import static TestJsql.SetUp.isElementPresent;
 public class EditProfileTest2 {
     WebDriver driver;
 
-    String oldName = "test@test";
+    String oldName = "appdev@nextmail.info";
     String oldPassword = "test123#";
-    String correctNewPassword = "Selenium123#";
+    String correctNewPassword = "selenium123#";
     String incorrectPassword = "selenium";
 
     @BeforeMethod
-    @Parameters({"browser", "user"})
-    public void SetUp(String browser, String user) {
+    @Parameters({"browser"})
+    public void SetUp(String browser) {
+        //getDriver selenium and login into homepage
+        driver = SetUp.getDriverOnlyParam(browser);
 
-        driver = SetUp.getDriverParam(browser, user);
+        WebElement email = driver.findElement(By.xpath("//input[@type='text']"));
+        email.sendKeys("appdev@nextmail.info");
+        WebElement password = driver.findElement(By.xpath("//input[@type='password']"));
+        password.sendKeys("test123#");
+        password.sendKeys(Keys.ENTER);
     }
 
     @Test
     public void EditName() throws Exception {
         try {
             Thread.sleep(500);
-            driver.get("http://localhost:9090/profile");
+            driver.get("https://test.jsql.it/profile");
 
             //Check actual value
             WebElement nameElement = getWhenVisible(By.xpath("//input[@placeholder='First name']"));
@@ -88,7 +94,7 @@ public class EditProfileTest2 {
     public void ChangePasswordWithIncorrectData() throws Exception {
         try {
             Thread.sleep(500);
-            driver.get("http://localhost:9090/profile");
+            driver.get("https://test.jsql.it/profile");
 
             //change password with incorrect data
             WebElement currentPasswordInput = getWhenVisible(By.xpath("//input[@placeholder='Current password']"));
@@ -144,7 +150,7 @@ public class EditProfileTest2 {
     public void ChangePasswordWithCorrectData() throws Exception {
         try {
             Thread.sleep(500);
-            driver.get("http://localhost:9090/profile");
+            driver.get("https://test.jsql.it/profile");
 
             //change password with correct data
             Thread.sleep(500);
@@ -159,8 +165,9 @@ public class EditProfileTest2 {
             clickWhenReady(By.xpath("//button[contains(.,'Ok')]"));
 
             //logout
-            Thread.sleep(500);
-            clickWhenReady(By.xpath("//a[@class='logout-sidebar']"));
+            Thread.sleep(1000);
+            clickWhenReady(By.xpath("//a[contains(@data-target,'#profile')]"));
+            clickWhenReady(By.xpath("//a[contains(.,'Logout')]"));
             Thread.sleep(500);
 
             //login with old password
@@ -169,7 +176,7 @@ public class EditProfileTest2 {
             WebElement passwordInput = getWhenVisible(By.xpath("//input[@type='password']"));
             passwordInput.sendKeys(oldPassword);
             passwordInput.sendKeys(Keys.ENTER);
-            Boolean isPasswordDoesNotMatchPresent = isElementPresent(By.xpath("//div[@class='contain-validation-contain-login ng-binding'][contains(.,'Password not match')]"));
+            Boolean isPasswordDoesNotMatchPresent = isElementPresent(By.xpath("//div[@class='contain-validation-contain ng-binding'][contains(.,'Password not match')]"));
 
             //login with new password
             Thread.sleep(500);
@@ -179,7 +186,7 @@ public class EditProfileTest2 {
             Thread.sleep(500);
 
             //change password to previous one
-            driver.get("http://localhost:9090/profile");
+            driver.get("https://test.jsql.it/profile");
             WebElement currentPasswordInput2 = getWhenVisible(By.xpath("//input[@placeholder='Current password']"));
             currentPasswordInput2.sendKeys(correctNewPassword);
             WebElement newPasswordInput2 = getWhenVisible(By.xpath("//input[@placeholder='New password']"));

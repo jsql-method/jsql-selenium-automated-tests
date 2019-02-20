@@ -198,7 +198,7 @@ public class AddAdminTest2 {
             Thread.sleep(500);
 
             //check if message is present
-            boolean isPresent = isElementPresent(By.xpath("//*[@class='text-danger-my-team ng-binding'][contains(.,'User with given role and email already exists')]"));
+            boolean isPresent = isElementPresent(By.xpath("//p[@class='text-danger ng-binding'][contains(.,'User with given role and email already exists')]"));
             System.out.println(isPresent);
             Thread.sleep(500);
             clickWhenReady(By.xpath("//button[contains(.,'Back')]"));

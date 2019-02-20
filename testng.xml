@@ -14,22 +14,23 @@
             <class name="TestJsql.CopyToClipboardTest2" />
             <class name="TestJsql.EditProfileTest2" />
             <class name="TestJsql.ElementsPresentDependingOnRoleTest2" />
-            <class name="TestJsql.Register2" />
+            <!--<class name="TestJsql.Register2" />-->
+            <!--<class name="TestJsql.RegisterNewCompanyAdmins" />-->
         </classes>
     </test>
-    <test name="Test on Firefox">
-        <parameter name="browser" value="Firefox" />
-        <parameter name="user" value="company admin" />
-        <classes>
-            <class name="TestJsql.AddAdminTest2" />
-            <class name="TestJsql.AddApiTest2" />
-            <class name="TestJsql.AddNewMemberTest2" />
-            <class name="TestJsql.CopyToClipboardTest2" />
-            <class name="TestJsql.EditProfileTest2" />
-            <class name="TestJsql.ElementsPresentDependingOnRoleTest2" />
-            <class name="TestJsql.Register2" />
-        </classes>
-    </test>
+    <!--<test name="Test on Firefox">-->
+        <!--<parameter name="browser" value="Firefox" />-->
+        <!--<parameter name="user" value="company admin" />-->
+        <!--<classes>-->
+            <!--<class name="TestJsql.AddAdminTest2" />-->
+            <!--<class name="TestJsql.AddApiTest2" />-->
+            <!--<class name="TestJsql.AddNewMemberTest2" />-->
+            <!--<class name="TestJsql.CopyToClipboardTest2" />-->
+            <!--<class name="TestJsql.EditProfileTest2" />-->
+            <!--<class name="TestJsql.ElementsPresentDependingOnRoleTest2" />-->
+            <!--<class name="TestJsql.Register2" />-->
+        <!--</classes>-->
+    <!--</test>-->
     <!--<test name="Test on Edge">-->
         <!--<parameter name="browser" value="Edge" />-->
         <!--<parameter name="user" value="company admin" />-->

@@ -33,16 +33,17 @@ public class AddApiTest2 {
     public void AddNewApi() throws Exception {
         try {
             Thread.sleep(500);
+            String randNum = String.valueOf(System.currentTimeMillis());
 
             //check number of api keys
             clickWhenReady(By.xpath("//a[contains(.,'Applications')]"));
             Thread.sleep(500);
             List<WebElement> numberOfApi = driver.findElements(By.xpath("(//a[@class='ng-binding'])"));
             clickWhenReady(By.xpath("//a[contains(.,'Add App')]"));
-            Thread.sleep(500);
+            Thread.sleep(1000);
 
             //Add new api
-            getWhenVisible(By.xpath("//input[@placeholder='Name']")).sendKeys("selenium");
+            getWhenVisible(By.xpath("//input[@placeholder='Name']")).sendKeys("selenium"+ randNum);
             clickWhenReady(By.xpath("//button[@type='submit']"));
             Thread.sleep(500);
             clickWhenReady(By.xpath("//button[contains(.,'Ok')]"));
@@ -53,7 +54,7 @@ public class AddApiTest2 {
             Thread.sleep(500);
 
             //delete new api
-            clickWhenReady(By.xpath("(//a[contains(.,'selenium')])[1]"));
+            clickWhenReady(By.xpath("(//a[contains(.,'selenium"+ randNum +"')])[1]"));
             Thread.sleep(500);
             clickWhenReady(By.xpath("//button[contains(.,'Delete')]"));
             Thread.sleep(500);
