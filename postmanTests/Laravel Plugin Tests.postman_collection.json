@@ -1,0 +1,3237 @@
+{
+	"info": {
+		"_postman_id": "72952c5d-f626-4a6f-8b83-b1bfc8a372e2",
+		"name": "Laravel Plugin Tests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "SELECT * from person (hash)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "21542449-a70c-4ab9-a5fe-2db847c62dd8",
+						"exec": [
+							"pm.environment.unset(\"token\");",
+							"",
+							"let jsonData = JSON.parse(responseBody);",
+							"let token = jsonData.data[0].token;",
+							"console.log(token);",
+							"",
+							"pm.environment.set(\"token\", token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Apikey",
+						"value": "{{ApiKey}}",
+						"type": "text"
+					},
+					{
+						"key": "MemberKey",
+						"value": "{{MemberKey}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n  \"select * from person\"\r\n]"
+				},
+				"url": "{{host}}"
+			},
+			"response": []
+		},
+		{
+			"name": "SELECT * from person",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "05350533-f8b1-4a6e-b26a-4e384ddd0115",
+						"exec": [
+							"pm.test(\"Contains string: 'surname' \", function () {\r",
+							"    var contains = false;\r",
+							"    var expected = \"surname\";\r",
+							"    pm.expect(pm.response.text()).to.include(expected);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"token\":\r\n\"{{token}}\"\r\n}"
+				},
+				"url": "{{address}}select"
+			},
+			"response": []
+		},
+		{
+			"name": "SELECT (z użyciem where) (hash)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e7b7111e-0c2e-4e82-a45d-f2e279e9c1d1",
+						"exec": [
+							"pm.environment.unset(\"token\");",
+							"",
+							"let jsonData = JSON.parse(responseBody);",
+							"let token = jsonData.data[0].token;",
+							"console.log(token);",
+							"",
+							"pm.environment.set(\"token\", token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Apikey",
+						"type": "text",
+						"value": "{{ApiKey}}"
+					},
+					{
+						"key": "MemberKey",
+						"type": "text",
+						"value": "{{MemberKey}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n  \"select name from person where id=890\"\r\n]"
+				},
+				"url": "{{host}}"
+			},
+			"response": []
+		},
+		{
+			"name": "SELECT (z użyciem where)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ca3277c5-14ba-4d1d-b4ab-1db403972403",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"    \r",
+							"});pm.test(\"Contains string: 'name' \", function () {\r",
+							"    var contains = false;\r",
+							"    var expected = \"name\";\r",
+							"    pm.expect(pm.response.text()).to.include(expected);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Contain string: 'id' \", function () {\r",
+							"    var contains = false;\r",
+							"    var expected = \"id:4\";\r",
+							"    pm.expect(pm.response.text()).to.not.include(expected);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"token\":\r\n\"{{token}}\"\r\n}"
+				},
+				"url": "{{address}}select"
+			},
+			"response": []
+		},
+		{
+			"name": "SELECT (wielkie litery) (hash)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6dec2dbc-0883-443a-8192-4a54f7dbfe4d",
+						"exec": [
+							"pm.environment.unset(\"token\");",
+							"",
+							"let jsonData = JSON.parse(responseBody);",
+							"let token = jsonData.data[0].token;",
+							"console.log(token);",
+							"",
+							"pm.environment.set(\"token\", token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Apikey",
+						"type": "text",
+						"value": "{{ApiKey}}"
+					},
+					{
+						"key": "MemberKey",
+						"type": "text",
+						"value": "{{MemberKey}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n  \"SELECT name FROM person\"\r\n]"
+				},
+				"url": "{{host}}"
+			},
+			"response": []
+		},
+		{
+			"name": "SELECT (wielkie litery)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ca3277c5-14ba-4d1d-b4ab-1db403972403",
+						"exec": [
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});    \r",
+							"pm.test(\"Contains string: 'name' \", function () {\r",
+							"    var contains = false;\r",
+							"    var expected = \"name\";\r",
+							"    pm.expect(pm.response.text()).to.include(expected);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"NOT Contains string: 'surname' \", function () {\r",
+							"    var contains = false;\r",
+							"    var expected = \"surname\";\r",
+							"    pm.expect(pm.response.text()).not.to.include(expected);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"token\":\r\n\"{{token}}\"\r\n}"
+				},
+				"url": "{{address}}select"
+			},
+			"response": []
+		},
+		{
+			"name": "SELECT (niepoprawne zapytanie) (hash)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "08f5665d-25fd-4b68-aabb-752588565133",
+						"exec": [
+							"pm.environment.unset(\"token\");",
+							"",
+							"let jsonData = JSON.parse(responseBody);",
+							"let token = jsonData.data[0].token;",
+							"console.log(token);",
+							"",
+							"pm.environment.set(\"token\", token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Apikey",
+						"type": "text",
+						"value": "{{ApiKey}}"
+					},
+					{
+						"key": "MemberKey",
+						"type": "text",
+						"value": "{{MemberKey}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n  \"{{token}}\"\r\n]"
+				},
+				"url": "{{host}}"
+			},
+			"response": []
+		},
+		{
+			"name": "SELECT (niepoprawne zapytanie)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ca3277c5-14ba-4d1d-b4ab-1db403972403",
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Contains string: 'Only SELECT queries allowed.' \", function () {\r",
+							"    var contains = false;\r",
+							"    var expected = \"Only SELECT queries allowed.\";\r",
+							"    pm.expect(pm.response.text()).to.include(expected);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"token\":\r\n\"{{token}}\"\r\n}"
+				},
+				"url": "{{address}}select"
+			},
+			"response": []
+		},
+		{
+			"name": "SELECT (zapytanie z nieistniejącą kolumną) (hash)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8aebd916-8331-4e10-a1e8-1c5b378fd166",
+						"exec": [
+							"pm.environment.unset(\"token\");",
+							"",
+							"let jsonData = JSON.parse(responseBody);",
+							"let token = jsonData.data[0].token;",
+							"console.log(token);",
+							"",
+							"pm.environment.set(\"token\", token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Apikey",
+						"type": "text",
+						"value": "{{ApiKey}}"
+					},
+					{
+						"key": "MemberKey",
+						"value": "{{MemberKey}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n  \"select hairstyle from person\"\r\n]"
+				},
+				"url": "{{host}}"
+			},
+			"response": []
+		},
+		{
+			"name": "SELECT (zapytanie z nieistniejącą kolumną)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ca3277c5-14ba-4d1d-b4ab-1db403972403",
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Contains string: 'does not exist' \", function () {\r",
+							"    var contains = false;\r",
+							"    var expected = \"does not exist\";\r",
+							"    pm.expect(pm.response.text()).to.include(expected);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"token\":\r\n\"{{token}}\"\r\n}"
+				},
+				"url": "{{address}}select"
+			},
+			"response": []
+		},
+		{
+			"name": "SELECT (z parametrami) - bez podania parametrów (hash)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f4749668-5bfd-4e95-b735-fd8c6f9adbea",
+						"exec": [
+							"pm.environment.unset(\"token\");",
+							"",
+							"let jsonData = JSON.parse(responseBody);",
+							"let token = jsonData.data[0].token;",
+							"console.log(token);",
+							"",
+							"pm.environment.set(\"token\", token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Apikey",
+						"type": "text",
+						"value": "{{ApiKey}}"
+					},
+					{
+						"key": "MemberKey",
+						"type": "text",
+						"value": "{{MemberKey}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n  \"select * from person where id=:id and name=:name\"\r\n]"
+				},
+				"url": "{{host}}"
+			},
+			"response": []
+		},
+		{
+			"name": "SELECT (z parametrami) - bez podania parametrów",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ca3277c5-14ba-4d1d-b4ab-1db403972403",
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Contains string: 'You have to include these params in the request: :id' \", function () {\r",
+							"    var contains = false;\r",
+							"    var expected = \"You have to include these params in the request: :id\";\r",
+							"    pm.expect(pm.response.text()).to.include(expected);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"token\":\r\n\"{{token}}\"\r\n}"
+				},
+				"url": "{{address}}select"
+			},
+			"response": []
+		},
+		{
+			"name": "SELECT (z parametrami) - niepoprawne parametry (hash)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "58dc51ed-f6a6-4aec-8717-5f9ef28cc780",
+						"exec": [
+							"pm.environment.unset(\"token\");",
+							"",
+							"let jsonData = JSON.parse(responseBody);",
+							"let token = jsonData.data[0].token;",
+							"console.log(token);",
+							"",
+							"pm.environment.set(\"token\", token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Apikey",
+						"type": "text",
+						"value": "{{ApiKey}}"
+					},
+					{
+						"key": "MemberKey",
+						"type": "text",
+						"value": "{{MemberKey}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n  \"select * from person where id=:id and name=:name\"\r\n]"
+				},
+				"url": "{{host}}"
+			},
+			"response": []
+		},
+		{
+			"name": "SELECT (z parametrami) - niepoprawne parametry (id , name)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ca3277c5-14ba-4d1d-b4ab-1db403972403",
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"NOT Contains string: name\", function () {\r",
+							"    var contains = false;\r",
+							"    var expected = '\"name\":\"Zbyszek\"';\r",
+							"    pm.expect(pm.response.text()).not.to.include(expected);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Contains string: Invalid parameter\", function () {\r",
+							"    var contains = false;\r",
+							"    var expected = 'Invalid parameter';\r",
+							"    pm.expect(pm.response.text()).to.include(expected);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"token\":\n\"{{token}}\",\n \"params\"\n :{\"name\":\"Zbyszek\", \"surname\":\"Nowak\"}\n}"
+				},
+				"url": "{{address}}select"
+			},
+			"response": []
+		},
+		{
+			"name": "SELECT (z parametrami) (hash)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "395c1419-7030-485a-843c-f16b948f7a22",
+						"exec": [
+							"pm.environment.unset(\"token\");",
+							"",
+							"let jsonData = JSON.parse(responseBody);",
+							"let token = jsonData.data[0].token;",
+							"console.log(token);",
+							"",
+							"pm.environment.set(\"token\", token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Apikey",
+						"type": "text",
+						"value": "{{ApiKey}}"
+					},
+					{
+						"key": "MemberKey",
+						"type": "text",
+						"value": "{{MemberKey}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n  \"select * from person where id=:id and name=:name\"\r\n]"
+				},
+				"url": "{{host}}"
+			},
+			"response": []
+		},
+		{
+			"name": "SELECT (z parametrami)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ca3277c5-14ba-4d1d-b4ab-1db403972403",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"    \r",
+							"});pm.test(\"Contains string: 'name' \", function () {\r",
+							"    var contains = false;\r",
+							"    var expected = '\"name\":\"Zbyszek\"';\r",
+							"    pm.expect(pm.response.text()).to.include(expected);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Contains string: 'id' \", function () {\r",
+							"    var contains = false;\r",
+							"    var expected = '\"id\":3';\r",
+							"    pm.expect(pm.response.text()).to.include(expected);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n \"token\":\r\n\"{{token}}\",\r\n \"params\"\r\n :{\"id\":3, \"name\":\"Zbyszek\"}\r\n}"
+				},
+				"url": "{{address}}select"
+			},
+			"response": []
+		},
+		{
+			"name": "SELECT (łączenie dwóch tokenów) (hash)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8b6a8464-9375-42f6-a2de-cae3cba7921a",
+						"exec": [
+							"pm.environment.unset(\"token1\");",
+							"",
+							"let jsonData = JSON.parse(responseBody);",
+							"let token = jsonData.data[0].token;",
+							"console.log(token);",
+							"",
+							"pm.environment.set(\"token1\", token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Apikey",
+						"type": "text",
+						"value": "{{ApiKey}}"
+					},
+					{
+						"key": "MemberKey",
+						"type": "text",
+						"value": "{{MemberKey}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[  \r\n  \"select * from\"\r\n]"
+				},
+				"url": "{{host}}"
+			},
+			"response": []
+		},
+		{
+			"name": "SELECT (łączenie dwóch tokenów) (hash) token 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8b6a8464-9375-42f6-a2de-cae3cba7921a",
+						"exec": [
+							"pm.environment.unset(\"token\");",
+							"pm.environment.unset(\"token2\");",
+							"",
+							"let jsonData = JSON.parse(responseBody);",
+							"let token = jsonData.data[0].token;",
+							"console.log(token);",
+							"",
+							"pm.environment.set(\"token2\", token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Apikey",
+						"type": "text",
+						"value": "{{ApiKey}}"
+					},
+					{
+						"key": "MemberKey",
+						"type": "text",
+						"value": "{{MemberKey}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[  \r\n  \"public.person where id = 890\"\r\n]"
+				},
+				"url": "{{host}}"
+			},
+			"response": []
+		},
+		{
+			"name": "SELECT (łączenie dwóch tokenów)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ca3277c5-14ba-4d1d-b4ab-1db403972403",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"    \r",
+							"});pm.test(\"Not contains string: id 5 \", function () {\r",
+							"    var contains = false;\r",
+							"    var expected = '\"id\":5';\r",
+							"    pm.expect(pm.response.text()).not.to.include(expected);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Contains string: id 890 \", function () {\r",
+							"    var contains = false;\r",
+							"    var expected = '\"id\":890';\r",
+							"    pm.expect(pm.response.text()).to.include(expected);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"token\":\r\n[\"{{token1}}\", \"{{token2}}\"]\r\n}"
+				},
+				"url": "{{address}}select"
+			},
+			"response": []
+		},
+		{
+			"name": "SELECT (łączenie dwóch tokenów z parametrami) (hash)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2b00ede1-0f0a-4612-92cc-73ebde0295e3",
+						"exec": [
+							"pm.environment.unset(\"token\");",
+							"pm.environment.unset(\"token1\");",
+							"",
+							"let jsonData = JSON.parse(responseBody);",
+							"let token = jsonData.data[0].token;",
+							"console.log(token);",
+							"",
+							"pm.environment.set(\"token1\", token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Apikey",
+						"type": "text",
+						"value": "{{ApiKey}}"
+					},
+					{
+						"key": "MemberKey",
+						"type": "text",
+						"value": "{{MemberKey}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n  \"select * from\"\r\n]"
+				},
+				"url": "{{host}}"
+			},
+			"response": []
+		},
+		{
+			"name": "SELECT (łączenie dwóch tokenów z parametrami) (hash) token2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2b00ede1-0f0a-4612-92cc-73ebde0295e3",
+						"exec": [
+							"pm.environment.unset(\"token\");",
+							"pm.environment.unset(\"token2\");",
+							"",
+							"let jsonData = JSON.parse(responseBody);",
+							"let token = jsonData.data[0].token;",
+							"console.log(token);",
+							"",
+							"pm.environment.set(\"token2\", token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Apikey",
+						"type": "text",
+						"value": "{{ApiKey}}"
+					},
+					{
+						"key": "MemberKey",
+						"type": "text",
+						"value": "{{MemberKey}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n  \"person where id=:id and name=:name\"\r\n]"
+				},
+				"url": "{{host}}"
+			},
+			"response": []
+		},
+		{
+			"name": "SELECT (łączenie dwóch tokenów z parametrami)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ca3277c5-14ba-4d1d-b4ab-1db403972403",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Contains string: name Zbyszek \", function () {\r",
+							"    var contains = false;\r",
+							"    var expected = '\"name\":\"Zbyszek\"';\r",
+							"    pm.expect(pm.response.text()).to.include(expected);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Contains string: surname Nowak \", function () {\r",
+							"    var contains = false;\r",
+							"    var expected = '\"surname\":\"Nowak\"';\r",
+							"    pm.expect(pm.response.text()).to.include(expected);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n \"token\":\r\n[\"{{token1}}\",\"{{token2}}\"],\r\n \"params\"\r\n :{\"id\": 890, \"name\": \"Zbyszek\"}\r\n}"
+				},
+				"url": "{{address}}select"
+			},
+			"response": []
+		},
+		{
+			"name": "SELECT (łączenie dwóch tokenów z niepoprawnymi parametrami) (hash)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "207af61b-5417-4dba-b6cf-bd44301e786a",
+						"exec": [
+							"pm.environment.unset(\"token\");",
+							"pm.environment.unset(\"token1\");",
+							"",
+							"let jsonData = JSON.parse(responseBody);",
+							"let token = jsonData.data[0].token;",
+							"console.log(token);",
+							"",
+							"pm.environment.set(\"token1\", token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Apikey",
+						"type": "text",
+						"value": "{{ApiKey}}"
+					},
+					{
+						"key": "MemberKey",
+						"type": "text",
+						"value": "{{MemberKey}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n  \"select * from\"\r\n]"
+				},
+				"url": "{{host}}"
+			},
+			"response": []
+		},
+		{
+			"name": "SELECT (łączenie dwóch tokenów z niepoprawnymi parametrami) (hash) token 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "207af61b-5417-4dba-b6cf-bd44301e786a",
+						"exec": [
+							"pm.environment.unset(\"token\");",
+							"pm.environment.unset(\"token2\");",
+							"",
+							"let jsonData = JSON.parse(responseBody);",
+							"let token = jsonData.data[0].token;",
+							"console.log(token);",
+							"",
+							"pm.environment.set(\"token2\", token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Apikey",
+						"type": "text",
+						"value": "{{ApiKey}}"
+					},
+					{
+						"key": "MemberKey",
+						"type": "text",
+						"value": "{{MemberKey}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n  \"person where id=:id and name=:name\"\r\n]"
+				},
+				"url": "{{host}}"
+			},
+			"response": []
+		},
+		{
+			"name": "SELECT (łączenie dwóch tokenów z niepoprawnymi parametrami)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ca3277c5-14ba-4d1d-b4ab-1db403972403",
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Contains string: Invalid parameter number\", function () {\r",
+							"    var contains = false;\r",
+							"    var expected = \"Invalid parameter number\";\r",
+							"    pm.expect(pm.response.text()).to.include(expected);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"token\":\n[\"xl1HcwL9HXEwmXJRiWksg\", \"ZkwoMUteKDLw9oMppXiINQ\"],\n \"params\"\n :{\"name\":\"Mirek\", \"surname\":\"Wołyński\"}\n}"
+				},
+				"url": "{{address}}select"
+			},
+			"response": []
+		},
+		{
+			"name": "SELECT (niepoprawny token)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ca3277c5-14ba-4d1d-b4ab-1db403972403",
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Contains string: 'Cannot get property 'query' on null object' \", function () {\r",
+							"    var contains = false;\r",
+							"    var expected = \"Cannot get property 'query' on null object\";\r",
+							"    pm.expect(pm.response.text()).to.include(expected);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"token\":\n\"NiepoprawnyQ\"\n}"
+				},
+				"url": "{{address}}select"
+			},
+			"response": []
+		},
+		{
+			"name": "INSERT (istniejący wpis) (hash)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f843354c-4e9e-47a7-a90e-0b9ca4f5c666",
+						"exec": [
+							"pm.environment.unset(\"token\");",
+							"",
+							"let jsonData = JSON.parse(responseBody);",
+							"let token = jsonData.data[0].token;",
+							"console.log(token);",
+							"",
+							"pm.environment.set(\"token\", token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Apikey",
+						"type": "text",
+						"value": "{{ApiKey}}"
+					},
+					{
+						"key": "MemberKey",
+						"type": "text",
+						"value": "{{MemberKey}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n \"insert into person (id, name, surname) values (890, 'Zbyszek', 'Nowak')\"\r\n]"
+				},
+				"url": "{{host}}"
+			},
+			"response": []
+		},
+		{
+			"name": "INSERT (istniejący wpis)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ca3277c5-14ba-4d1d-b4ab-1db403972403",
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Contains string: duplicate key value violates unique constraint\", function () {\r",
+							"    var contains = false;\r",
+							"    var expected = 'duplicate key value violates unique constraint';\r",
+							"    pm.expect(pm.response.text()).to.include(expected);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"token\":\r\n\"{{token}}\"\r\n}"
+				},
+				"url": "{{address}}insert"
+			},
+			"response": []
+		},
+		{
+			"name": "INSERT (nieistniejąca tabela) (hash)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "501fd7a2-e25f-4df6-9901-c27b0a3db462",
+						"exec": [
+							"pm.environment.unset(\"token\");",
+							"",
+							"let jsonData = JSON.parse(responseBody);",
+							"let token = jsonData.data[0].token;",
+							"console.log(token);",
+							"",
+							"pm.environment.set(\"token\", token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Apikey",
+						"type": "text",
+						"value": "{{ApiKey}}"
+					},
+					{
+						"key": "MemberKey",
+						"type": "text",
+						"value": "{{MemberKey}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n  \"insert into ludzie (name, surname) values ('JSQL', 'Nowak')\"\r\n]"
+				},
+				"url": "{{host}}"
+			},
+			"response": []
+		},
+		{
+			"name": "INSERT (nieistniejąca tabela)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ca3277c5-14ba-4d1d-b4ab-1db403972403",
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Contains string: does not exist\", function () {\r",
+							"    var contains = false;\r",
+							"    var expected = 'does not exist';\r",
+							"    pm.expect(pm.response.text()).to.include(expected);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"token\":\r\n\"{{token}}\"\r\n}"
+				},
+				"url": "{{address}}insert"
+			},
+			"response": []
+		},
+		{
+			"name": "INSERT (poprawne zapytanie) (hash)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a16e786e-03e0-41cf-982c-f93bd8459c12",
+						"exec": [
+							"pm.environment.unset(\"token\");",
+							"",
+							"let jsonData = JSON.parse(responseBody);",
+							"let token = jsonData.data[0].token;",
+							"console.log(token);",
+							"",
+							"pm.environment.set(\"token\", token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Apikey",
+						"type": "text",
+						"value": "{{ApiKey}}"
+					},
+					{
+						"key": "MemberKey",
+						"type": "text",
+						"value": "{{MemberKey}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n \"insert into person (name, surname) values ('JSQL', 'Nowak')\"\r\n]"
+				},
+				"url": "{{host}}"
+			},
+			"response": []
+		},
+		{
+			"name": "INSERT (poprawne zapytanie)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ca3277c5-14ba-4d1d-b4ab-1db403972403",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Contains string: duplicate key value violates unique constraint\", function () {\r",
+							"    var contains = false;\r",
+							"    var expected = 'duplicate key value violates unique constraint';\r",
+							"    pm.expect(pm.response.text()).not.to.include(expected);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"token\":\r\n  \"{{token}}\"\r\n}"
+				},
+				"url": "{{address}}insert"
+			},
+			"response": []
+		},
+		{
+			"name": "INSERT (łączenie tokenów z parametrami) (hash)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ee062af9-939f-4778-92d2-1606ea55fc09",
+						"exec": [
+							"pm.environment.unset(\"token\");",
+							"pm.environment.unset(\"token1\");",
+							"",
+							"let jsonData = JSON.parse(responseBody);",
+							"let token = jsonData.data[0].token;",
+							"console.log(token);",
+							"",
+							"pm.environment.set(\"token1\", token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Apikey",
+						"type": "text",
+						"value": "{{ApiKey}}"
+					},
+					{
+						"key": "MemberKey",
+						"type": "text",
+						"value": "{{MemberKey}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n  \"insert into person(name, surname)\"\r\n]"
+				},
+				"url": "{{host}}"
+			},
+			"response": []
+		},
+		{
+			"name": "INSERT (łączenie tokenów z parametrami) (hash) token2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ee062af9-939f-4778-92d2-1606ea55fc09",
+						"exec": [
+							"pm.environment.unset(\"token\");",
+							"pm.environment.unset(\"token2\");",
+							"",
+							"let jsonData = JSON.parse(responseBody);",
+							"let token = jsonData.data[0].token;",
+							"console.log(token);",
+							"",
+							"pm.environment.set(\"token2\", token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Apikey",
+						"type": "text",
+						"value": "{{ApiKey}}"
+					},
+					{
+						"key": "MemberKey",
+						"type": "text",
+						"value": "{{MemberKey}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n  \"values(:name, :surname)\"\r\n]"
+				},
+				"url": "{{host}}"
+			},
+			"response": []
+		},
+		{
+			"name": "INSERT (łączenie tokenów z parametrami)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ca3277c5-14ba-4d1d-b4ab-1db403972403",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Contains string: duplicate key value violates unique constraint\", function () {\r",
+							"    var contains = false;\r",
+							"    var expected = 'duplicate key value violates unique constraint';\r",
+							"    pm.expect(pm.response.text()).not.to.include(expected);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Contains string: Invalid parameter number\", function () {\r",
+							"    var contains = false;\r",
+							"    var expected = 'Invalid parameter number';\r",
+							"    pm.expect(pm.response.text()).not.to.include(expected);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Contains string: ERROR\", function () {\r",
+							"    var contains = false;\r",
+							"    var expected = 'ERROR';\r",
+							"    pm.expect(pm.response.text()).not.to.include(expected);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"token\":\r\n  [\"{{token1}}\", \"{{token2}}\"],\r\n   \"params\"\r\n :{\"surname\": \"Wołyński\", \"name\": \"JSQL\"}\r\n}"
+				},
+				"url": "{{address}}insert"
+			},
+			"response": []
+		},
+		{
+			"name": "UPDATE (nieisteniejący wpis) (hash)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "caccf619-8854-4dba-b7cf-fe54a598b300",
+						"exec": [
+							"pm.environment.unset(\"token\");",
+							"",
+							"let jsonData = JSON.parse(responseBody);",
+							"let token = jsonData.data[0].token;",
+							"console.log(token);",
+							"",
+							"pm.environment.set(\"token\", token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Apikey",
+						"type": "text",
+						"value": "{{ApiKey}}"
+					},
+					{
+						"key": "MemberKey",
+						"type": "text",
+						"value": "{{MemberKey}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n  \"update person set age=18 where id=56666\"\r\n]\r\n"
+				},
+				"url": "{{host}}"
+			},
+			"response": []
+		},
+		{
+			"name": "UPDATE (nieisteniejący wpis)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ca3277c5-14ba-4d1d-b4ab-1db403972403",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Contains string: NO CHANGES\", function () {\r",
+							"    var contains = false;\r",
+							"    var expected = 'NO CHANGES';\r",
+							"    pm.expect(pm.response.text()).to.include(expected);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"token\":\r\n  \"{{token}}\"\r\n}"
+				},
+				"url": "{{address}}update"
+			},
+			"response": []
+		},
+		{
+			"name": "UPDATE (poprawne zapytanie) (hash)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8d8b8e99-9f2d-439f-95d0-3d7876e2ca3d",
+						"exec": [
+							"pm.environment.unset(\"token\");",
+							"",
+							"let jsonData = JSON.parse(responseBody);",
+							"let token = jsonData.data[0].token;",
+							"console.log(token);",
+							"",
+							"pm.environment.set(\"token\", token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Apikey",
+						"type": "text",
+						"value": "{{ApiKey}}"
+					},
+					{
+						"key": "MemberKey",
+						"type": "text",
+						"value": "{{MemberKey}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n  \"update person set age=18 where id=6\"\r\n]\r\n"
+				},
+				"url": "{{host}}"
+			},
+			"response": []
+		},
+		{
+			"name": "UPDATE (poprawne zapytanie)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ca3277c5-14ba-4d1d-b4ab-1db403972403",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Contains string: OK\", function () {\r",
+							"    var contains = false;\r",
+							"    var expected = 'OK';\r",
+							"    pm.expect(pm.response.text()).to.include(expected);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"token\":\r\n  \"{{token}}\"\r\n}"
+				},
+				"url": "{{address}}update"
+			},
+			"response": []
+		},
+		{
+			"name": "UPDATE (łączenie tokenów z parametrami) (hash)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "92cb0615-7256-4f1a-afca-d81dcbdb7853",
+						"exec": [
+							"pm.environment.unset(\"token\");",
+							"pm.environment.unset(\"token1\");",
+							"",
+							"let jsonData = JSON.parse(responseBody);",
+							"let token = jsonData.data[0].token;",
+							"console.log(token);",
+							"",
+							"pm.environment.set(\"token1\", token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Apikey",
+						"type": "text",
+						"value": "{{ApiKey}}"
+					},
+					{
+						"key": "MemberKey",
+						"type": "text",
+						"value": "{{MemberKey}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n  \"update car set model=:model\"\r\n]"
+				},
+				"url": "{{host}}"
+			},
+			"response": []
+		},
+		{
+			"name": "UPDATE (łączenie tokenów z parametrami) (hash) token2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "92cb0615-7256-4f1a-afca-d81dcbdb7853",
+						"exec": [
+							"pm.environment.unset(\"token\");",
+							"pm.environment.unset(\"token2\");",
+							"",
+							"let jsonData = JSON.parse(responseBody);",
+							"let token = jsonData.data[0].token;",
+							"console.log(token);",
+							"",
+							"pm.environment.set(\"token2\", token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Apikey",
+						"type": "text",
+						"value": "{{ApiKey}}"
+					},
+					{
+						"key": "MemberKey",
+						"type": "text",
+						"value": "{{MemberKey}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n  \"where id=:id\"\r\n]"
+				},
+				"url": "{{host}}"
+			},
+			"response": []
+		},
+		{
+			"name": "UPDATE (łączenie tokenów z parametrami)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ca3277c5-14ba-4d1d-b4ab-1db403972403",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Contains string: OK\", function () {\r",
+							"    var contains = false;\r",
+							"    var expected = 'OK';\r",
+							"    pm.expect(pm.response.text()).to.include(expected);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"token\":\r\n  [\"{{token1}}\", \"{{token2}}\"],\r\n   \"params\":\r\n {\"id\":1, \"model\":\"Suzuki\"}\r\n}"
+				},
+				"url": "{{address}}update"
+			},
+			"response": []
+		},
+		{
+			"name": "INSERT (ID:9 , model:KIA) (hash)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3fac788c-f8b6-433c-93b1-164de10643a6",
+						"exec": [
+							"pm.environment.unset(\"token\");",
+							"",
+							"let jsonData = JSON.parse(responseBody);",
+							"let token = jsonData.data[0].token;",
+							"console.log(token);",
+							"",
+							"pm.environment.set(\"token\", token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Apikey",
+						"type": "text",
+						"value": "{{ApiKey}}"
+					},
+					{
+						"key": "MemberKey",
+						"type": "text",
+						"value": "{{MemberKey}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n \"insert into car (id, model) values (9, 'KIA')\"\r\n]"
+				},
+				"url": "{{host}}"
+			},
+			"response": []
+		},
+		{
+			"name": "INSERT (ID:9 , model:KIA)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ca3277c5-14ba-4d1d-b4ab-1db403972403",
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"token\":\r\n  \"{{token}}\"\r\n}"
+				},
+				"url": "{{address}}insert"
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE (poprawne zapytanie) (hash)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "035ce647-a1e4-4542-ad39-aae844bbc647",
+						"exec": [
+							"pm.environment.unset(\"token\");",
+							"pm.environment.unset(\"token1\");",
+							"",
+							"let jsonData = JSON.parse(responseBody);",
+							"let token = jsonData.data[0].token;",
+							"console.log(token);",
+							"",
+							"pm.environment.set(\"token1\", token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Apikey",
+						"type": "text",
+						"value": "{{ApiKey}}"
+					},
+					{
+						"key": "MemberKey",
+						"type": "text",
+						"value": "{{MemberKey}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n  \"delete from car\"\r\n]"
+				},
+				"url": "{{host}}"
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE (poprawne zapytanie) (hash) token2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "035ce647-a1e4-4542-ad39-aae844bbc647",
+						"exec": [
+							"pm.environment.unset(\"token\");",
+							"pm.environment.unset(\"token2\");",
+							"",
+							"let jsonData = JSON.parse(responseBody);",
+							"let token = jsonData.data[0].token;",
+							"console.log(token);",
+							"",
+							"pm.environment.set(\"token2\", token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Apikey",
+						"type": "text",
+						"value": "{{ApiKey}}"
+					},
+					{
+						"key": "MemberKey",
+						"type": "text",
+						"value": "{{MemberKey}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n  \"where model=:model and id=:id\"\r\n]"
+				},
+				"url": "{{host}}"
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE (poprawne zapytanie)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ca3277c5-14ba-4d1d-b4ab-1db403972403",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Contains string: OK\", function () {\r",
+							"    var contains = false;\r",
+							"    var expected = 'OK';\r",
+							"    pm.expect(pm.response.text()).to.include(expected);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"token\":\r\n  [\"{{token1}}\", \"{{token2}}\"],\r\n   \"params\"\r\n :{\"id\": 9, \"model\": \"KIA\"}\r\n}"
+				},
+				"url": "{{address}}delete"
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE (nieisteniejący wpis) (hash)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d9a5eb4d-fcad-4f6d-b723-f384d6379b5a",
+						"exec": [
+							"pm.environment.unset(\"token\");",
+							"",
+							"let jsonData = JSON.parse(responseBody);",
+							"let token = jsonData.data[0].token;",
+							"console.log(token);",
+							"",
+							"pm.environment.set(\"token\", token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Apikey",
+						"type": "text",
+						"value": "{{ApiKey}}"
+					},
+					{
+						"key": "MemberKey",
+						"type": "text",
+						"value": "{{MemberKey}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n  \"delete from car where model=:model and id=:id\"\r\n]"
+				},
+				"url": "{{host}}"
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE (nieisteniejący wpis)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ca3277c5-14ba-4d1d-b4ab-1db403972403",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Contains string: NO CHANGES\", function () {\r",
+							"    var contains = false;\r",
+							"    var expected = 'NO CHANGES';\r",
+							"    pm.expect(pm.response.text()).to.include(expected);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"token\":\r\n  \"{{token}}\",\r\n   \"params\"\r\n :{\"id\": 9, \"model\": \"KIA\"}\r\n}"
+				},
+				"url": "{{address}}delete"
+			},
+			"response": []
+		},
+		{
+			"name": "SELECT (z parametrami '?' ) (hash)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "395c1419-7030-485a-843c-f16b948f7a22",
+						"exec": [
+							"pm.environment.unset(\"token\");",
+							"",
+							"let jsonData = JSON.parse(responseBody);",
+							"let token = jsonData.data[0].token;",
+							"console.log(token);",
+							"",
+							"pm.environment.set(\"token\", token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Apikey",
+						"type": "text",
+						"value": "{{ApiKey}}"
+					},
+					{
+						"key": "MemberKey",
+						"type": "text",
+						"value": "{{MemberKey}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n  \"select * from person where id= ? and name= ?\"\r\n]"
+				},
+				"url": "{{host}}"
+			},
+			"response": []
+		},
+		{
+			"name": "SELECT (z parametrami '?' ) (bez podania parametrów)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ca3277c5-14ba-4d1d-b4ab-1db403972403",
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"    \r",
+							"});pm.test(\"Contains string: 'You have to include missing params' \", function () {\r",
+							"    var contains = false;\r",
+							"    var expected = 'You have to include missing params';\r",
+							"    pm.expect(pm.response.text()).to.include(expected);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n \"token\":\r\n\"{{token}}\"\r\n}"
+				},
+				"url": "{{address}}select"
+			},
+			"response": []
+		},
+		{
+			"name": "SELECT (z parametrami '?' ) (z podanym jednym parametrem)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ca3277c5-14ba-4d1d-b4ab-1db403972403",
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"    \r",
+							"});pm.test(\"Contains string: 'You have to include missing params' \", function () {\r",
+							"    var contains = false;\r",
+							"    var expected = 'You have to include missing params';\r",
+							"    pm.expect(pm.response.text()).to.include(expected);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n \"token\":\r\n\"{{token}}\",\r\n\"params\":\r\n[\"900\"]\r\n}"
+				},
+				"url": "{{address}}select"
+			},
+			"response": []
+		},
+		{
+			"name": "SELECT (z parametrami '?' ) (niepoprawny parametr)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ca3277c5-14ba-4d1d-b4ab-1db403972403",
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"    \r",
+							"});pm.test(\"Contains string: 'invalid input syntax for integer:' \", function () {\r",
+							"    var contains = false;\r",
+							"    var expected = 'invalid input syntax for integer:';\r",
+							"    pm.expect(pm.response.text()).to.include(expected);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n \"token\":\r\n\"{{token}}\",\r\n\"params\":\r\n[\"Mirek\", \"Mirek\"]\r\n}"
+				},
+				"url": "{{address}}select"
+			},
+			"response": []
+		},
+		{
+			"name": "SELECT (z parametrami '?' ) (z podanymi poprawnymi parametrami)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ca3277c5-14ba-4d1d-b4ab-1db403972403",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"    \r",
+							"});pm.test(\"Contains string: 'name' \", function () {\r",
+							"    var contains = false;\r",
+							"    var expected = '\"name\":\"Mirek\"';\r",
+							"    pm.expect(pm.response.text()).to.include(expected);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Contains string: 'id' \", function () {\r",
+							"    var contains = false;\r",
+							"    var expected = '\"id\":900';\r",
+							"    pm.expect(pm.response.text()).to.include(expected);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n \"token\":\r\n\"{{token}}\",\r\n\"params\":\r\n[\"900\", \"Mirek\"]\r\n}"
+				},
+				"url": "{{address}}select"
+			},
+			"response": []
+		},
+		{
+			"name": "SELECT (łączenie tokenów z parametrami '?' ) (hash)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "395c1419-7030-485a-843c-f16b948f7a22",
+						"exec": [
+							"pm.environment.unset(\"token1\");",
+							"",
+							"let jsonData = JSON.parse(responseBody);",
+							"let token = jsonData.data[0].token;",
+							"console.log(token);",
+							"",
+							"pm.environment.set(\"token1\", token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Apikey",
+						"type": "text",
+						"value": "{{ApiKey}}"
+					},
+					{
+						"key": "MemberKey",
+						"type": "text",
+						"value": "{{MemberKey}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[  \r\n  \"select * from\"\r\n]"
+				},
+				"url": "{{host}}"
+			},
+			"response": []
+		},
+		{
+			"name": "SELECT (łączenie tokenów z parametrami '?' ) (hash) token2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "395c1419-7030-485a-843c-f16b948f7a22",
+						"exec": [
+							"pm.environment.unset(\"token2\");",
+							"",
+							"let jsonData = JSON.parse(responseBody);",
+							"let token = jsonData.data[0].token;",
+							"console.log(token);",
+							"",
+							"pm.environment.set(\"token2\", token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Apikey",
+						"type": "text",
+						"value": "{{ApiKey}}"
+					},
+					{
+						"key": "MemberKey",
+						"type": "text",
+						"value": "{{MemberKey}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n  \"person where id= ?\"\r\n]"
+				},
+				"url": "{{host}}"
+			},
+			"response": []
+		},
+		{
+			"name": "SELECT (łączenie tokenów z parametrami '?' ) (hash) token3",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "395c1419-7030-485a-843c-f16b948f7a22",
+						"exec": [
+							"pm.environment.unset(\"token3\");",
+							"",
+							"let jsonData = JSON.parse(responseBody);",
+							"let token = jsonData.data[0].token;",
+							"console.log(token);",
+							"",
+							"pm.environment.set(\"token3\", token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Apikey",
+						"type": "text",
+						"value": "{{ApiKey}}"
+					},
+					{
+						"key": "MemberKey",
+						"type": "text",
+						"value": "{{MemberKey}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n  \"and name= ?\"\r\n]"
+				},
+				"url": "{{host}}"
+			},
+			"response": []
+		},
+		{
+			"name": "SELECT (łączenie tokenów z parametrami '?' )",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ca3277c5-14ba-4d1d-b4ab-1db403972403",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"    \r",
+							"});pm.test(\"Contains string: 'name' \", function () {\r",
+							"    var contains = false;\r",
+							"    var expected = '\"name\":\"Mirek\"';\r",
+							"    pm.expect(pm.response.text()).to.include(expected);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Contains string: 'id' \", function () {\r",
+							"    var contains = false;\r",
+							"    var expected = '\"id\":900';\r",
+							"    pm.expect(pm.response.text()).to.include(expected);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n \"token\":\r\n[\"{{token1}}\",\"{{token2}}\",\"{{token3}}\"],\r\n \"params\"\r\n :[900, \"Mirek\"]\r\n}"
+				},
+				"url": "{{address}}select"
+			},
+			"response": []
+		},
+		{
+			"name": "INSERT (łączenie tokenów z parametrami '?') (hash)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ee062af9-939f-4778-92d2-1606ea55fc09",
+						"exec": [
+							"pm.environment.unset(\"token\");",
+							"pm.environment.unset(\"token1\");",
+							"",
+							"let jsonData = JSON.parse(responseBody);",
+							"let token = jsonData.data[0].token;",
+							"console.log(token);",
+							"",
+							"pm.environment.set(\"token1\", token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Apikey",
+						"type": "text",
+						"value": "{{ApiKey}}"
+					},
+					{
+						"key": "MemberKey",
+						"type": "text",
+						"value": "{{MemberKey}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n  \"insert into person(name, salary)\"\r\n]"
+				},
+				"url": "{{host}}"
+			},
+			"response": []
+		},
+		{
+			"name": "INSERT (łączenie tokenów z parametrami '?') (hash) token 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ee062af9-939f-4778-92d2-1606ea55fc09",
+						"exec": [
+							"pm.environment.unset(\"token\");",
+							"pm.environment.unset(\"token2\");",
+							"",
+							"let jsonData = JSON.parse(responseBody);",
+							"let token = jsonData.data[0].token;",
+							"console.log(token);",
+							"",
+							"pm.environment.set(\"token2\", token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Apikey",
+						"type": "text",
+						"value": "{{ApiKey}}"
+					},
+					{
+						"key": "MemberKey",
+						"type": "text",
+						"value": "{{MemberKey}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n  \"values(?, ?)\"\r\n]"
+				},
+				"url": "{{host}}"
+			},
+			"response": []
+		},
+		{
+			"name": "INSERT (łączenie tokenów z parametrami '?') (bez podania parametrów)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ca3277c5-14ba-4d1d-b4ab-1db403972403",
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Contains string: duplicate key value violates unique constraint\", function () {\r",
+							"    var contains = false;\r",
+							"    var expected = 'duplicate key value violates unique constraint';\r",
+							"    pm.expect(pm.response.text()).not.to.include(expected);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Contains string: requires 2\", function () {\r",
+							"    var contains = false;\r",
+							"    var expected = 'requires 2';\r",
+							"    pm.expect(pm.response.text()).to.include(expected);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"token\":\r\n  [\"{{token1}}\", \"{{token2}}\"],\r\n  \"params\":[]\r\n}"
+				},
+				"url": "{{address}}insert"
+			},
+			"response": []
+		},
+		{
+			"name": "INSERT (łączenie tokenów z parametrami '?') (niepoprawne parametry)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ca3277c5-14ba-4d1d-b4ab-1db403972403",
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Not Contains string: duplicate key value violates unique constraint\", function () {\r",
+							"    var contains = false;\r",
+							"    var expected = 'duplicate key value violates unique constraint';\r",
+							"    pm.expect(pm.response.text()).not.to.include(expected);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"NOT Contains string: Invalid parameter number\", function () {\r",
+							"    var contains = false;\r",
+							"    var expected = 'Invalid parameter number';\r",
+							"    pm.expect(pm.response.text()).not.to.include(expected);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Contains string: invalid input syntax for type numeric\", function () {\r",
+							"    var contains = false;\r",
+							"    var expected = 'invalid input syntax for type numeric';\r",
+							"    pm.expect(pm.response.text()).to.include(expected);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"token\":\r\n  [\"{{token1}}\", \"{{token2}}\"],\r\n   \"params\"\r\n :[\"JSQL\", \"salary\"]\r\n}"
+				},
+				"url": "{{address}}insert"
+			},
+			"response": []
+		},
+		{
+			"name": "INSERT (łączenie tokenów z parametrami '?') (poprawne parametry)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ca3277c5-14ba-4d1d-b4ab-1db403972403",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Not Contains string: duplicate key value violates unique constraint\", function () {\r",
+							"    var contains = false;\r",
+							"    var expected = 'duplicate key value violates unique constraint';\r",
+							"    pm.expect(pm.response.text()).not.to.include(expected);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"NOT Contains string: Invalid parameter number\", function () {\r",
+							"    var contains = false;\r",
+							"    var expected = 'Invalid parameter number';\r",
+							"    pm.expect(pm.response.text()).not.to.include(expected);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"NOT Contains string: ERROR\", function () {\r",
+							"    var contains = false;\r",
+							"    var expected = 'ERROR';\r",
+							"    pm.expect(pm.response.text()).not.to.include(expected);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"token\":\r\n  [\"{{token1}}\", \"{{token2}}\"],\r\n   \"params\"\r\n :[\"JSQL\", 1000]\r\n}"
+				},
+				"url": "{{address}}insert"
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE (zapytanie z parametrami '?')  (hash)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "035ce647-a1e4-4542-ad39-aae844bbc647",
+						"exec": [
+							"pm.environment.unset(\"token\");",
+							"pm.environment.unset(\"token1\");",
+							"",
+							"let jsonData = JSON.parse(responseBody);",
+							"let token = jsonData.data[0].token;",
+							"console.log(token);",
+							"",
+							"pm.environment.set(\"token1\", token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Apikey",
+						"type": "text",
+						"value": "{{ApiKey}}"
+					},
+					{
+						"key": "MemberKey",
+						"type": "text",
+						"value": "{{MemberKey}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n  \"delete from car\"\r\n]"
+				},
+				"url": "{{host}}"
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE (zapytanie z parametrami '?') (hash) token 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "035ce647-a1e4-4542-ad39-aae844bbc647",
+						"exec": [
+							"pm.environment.unset(\"token\");",
+							"pm.environment.unset(\"token2\");",
+							"",
+							"let jsonData = JSON.parse(responseBody);",
+							"let token = jsonData.data[0].token;",
+							"console.log(token);",
+							"",
+							"pm.environment.set(\"token2\", token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Apikey",
+						"type": "text",
+						"value": "{{ApiKey}}"
+					},
+					{
+						"key": "MemberKey",
+						"type": "text",
+						"value": "{{MemberKey}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n  \"where id = ? and model = ?\"\r\n]"
+				},
+				"url": "{{host}}"
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE (zapytanie z parametrami '?') (bez podania parametrów)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ca3277c5-14ba-4d1d-b4ab-1db403972403",
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Contains string: requires 2\", function () {\r",
+							"    var contains = false;\r",
+							"    var expected = 'requires 2';\r",
+							"    pm.expect(pm.response.text()).to.include(expected);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"token\":\r\n  [\"{{token1}}\", \"{{token2}}\"]\r\n}"
+				},
+				"url": "{{address}}delete"
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE (zapytanie z parametrami '?') (niepoprawne parametry)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ca3277c5-14ba-4d1d-b4ab-1db403972403",
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Contains string: invalid input syntax for integer\", function () {\r",
+							"    var contains = false;\r",
+							"    var expected = 'invalid input syntax for integer';\r",
+							"    pm.expect(pm.response.text()).to.include(expected);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"token\":\r\n  [\"{{token1}}\", \"{{token2}}\"],\r\n   \"params\"\r\n :[\"Suzuki\", \"Suzuki\"]\r\n}"
+				},
+				"url": "{{address}}delete"
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE (zapytanie z parametrami '?') (poprawne parametry)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ca3277c5-14ba-4d1d-b4ab-1db403972403",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Contains string: NO CHANGES\", function () {\r",
+							"    var contains = false;\r",
+							"    var expected = 'NO CHANGES';\r",
+							"    pm.expect(pm.response.text()).to.include(expected);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"token\":\r\n  [\"{{token1}}\", \"{{token2}}\"],\r\n   \"params\"\r\n :[9,\"KIA\"]\r\n}"
+				},
+				"url": "{{address}}delete"
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE (czyszczenie bazy po insertach) (hash)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "829bdc47-6cb3-4b95-9aca-003a92ee994f",
+						"exec": [
+							"pm.environment.unset(\"token\");",
+							"",
+							"let jsonData = JSON.parse(responseBody);",
+							"let token = jsonData.data[0].token;",
+							"console.log(token);",
+							"",
+							"pm.environment.set(\"token\", token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Apikey",
+						"type": "text",
+						"value": "{{ApiKey}}"
+					},
+					{
+						"key": "MemberKey",
+						"type": "text",
+						"value": "{{MemberKey}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n  \"delete from person where name='JSQL'\"\r\n]\r\n"
+				},
+				"url": "{{host}}"
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE (czyszczenie bazy po insertach)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ca3277c5-14ba-4d1d-b4ab-1db403972403",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Contains string: OK\", function () {\r",
+							"    var contains = false;\r",
+							"    var expected = 'OK';\r",
+							"    pm.expect(pm.response.text()).to.include(expected);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"token\":\r\n  \"{{token}}\"\r\n}"
+				},
+				"url": "http://laravel.softwarecartoon.com/jsql/delete"
+			},
+			"response": []
+		},
+		{
+			"name": "Token unset",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "829bdc47-6cb3-4b95-9aca-003a92ee994f",
+						"exec": [
+							"pm.environment.unset(\"token\");",
+							"pm.environment.unset(\"token1\");",
+							"pm.environment.unset(\"token2\");",
+							"pm.environment.unset(\"token3\");",
+							"pm.environment.unset(\"txid\");",
+							"pm.environment.unset(\"lastId\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json",
+						"disabled": true
+					},
+					{
+						"key": "Apikey",
+						"type": "text",
+						"value": "{{ApiKey}}",
+						"disabled": true
+					},
+					{
+						"key": "MemberKey",
+						"type": "text",
+						"value": "{{MemberKey}}",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "http://softwarecartoon.com:{{host}}"
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "7395dd30-4f2c-430c-97f1-e9c3da024665",
+				"type": "text/javascript",
+				"exec": [
+					"//test.jsql.pl",
+					"pm.variables.set(\"host\", \"https://test-api.jsql.it/api/request/hashes\");",
+					"pm.variables.set(\"ApiKey\", \"==QNuwzXoRS2sAJ8uSjX1BG2fVGN2GoYZTUXoesIFdTg==oV08XxuBcjB2Yg6P7pkB\");",
+					"pm.variables.set(\"MemberKey\", \"chWaJqS9fxjxXaP3dTtVhA==\");",
+					"",
+					"pm.variables.set(\"address\", \"http://laravel.softwarecartoon.com/jsql/\");"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "d882d203-fed3-47a5-b1db-ca57505ad688",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

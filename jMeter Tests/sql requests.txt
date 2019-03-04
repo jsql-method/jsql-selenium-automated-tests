@@ -1,0 +1,59 @@
+select * from person
+select name from person where id=890
+SELECT name FROM person
+selectfd * from dsa
+select hairstyle from person
+select name from person where id=1
+select name from person where id=2
+select name from person where id=3
+select name from person where id=4
+select name from person where id=5
+select name from person where id=6
+select name from person where id=7
+select name from person where id=8
+select name from person where id=9
+select name from person where id=10
+select name from person where id=11
+select name from person where id=12
+select name from person where id=13
+select name from person where id=14
+select name from person where id=15
+select name from person where id=16
+select name from person where id=17
+select name from person where id=18
+select name from person where id=19
+select name from person where id=20
+select name from person where id=21
+select name from person where id=22
+select name from person where id=23
+select name from person where id=24
+select name from person where id=25
+SELECT * FROM My_Schema.Tables
+SELECT Student_ID FROM STUDENT
+SELECT EMP_ID, NAME FROM EMPLOYEE_TBL WHERE EMP_ID = '0000'
+SELECT EMP_ID, LAST_NAME FROM EMPLOYEE WHERE CITY = 'Seattle' ORDER BY EMP_ID
+SELECT EMP_ID, LAST_NAME FROM EMPLOYEE_TBL WHERE CITY = 'INDIANAPOLIS' ORDER BY EMP_ID asc
+SELECT Name, Age FROM Patients WHERE Age > 40 GROUP BY Age ORDER BY Name
+SELECT SUM(Salary)FROM Employee WHERE Emp_Age < 30
+CREATE OR REPLACE VIEW [ Product List] AS SELECT ProductID, ProductName, Category FROM Products WHERE Discontinued = No
+UPDATE Customers SET Zip=Phone, Phone=Zip
+SELECT TOP 25 FROM Customers WHERE Customer_ID<>NULL
+SELECT ID FROM Customers INNER JOIN Orders ON Customers.ID = Orders.ID
+SELECT phone FROM Customers UNION SELECT item FROM Orders
+SELECT item -- single comment  FROM Orders -- another single comment WHERE id ALL = (SELECT ID FROM Orders WHERE quantity > 25)
+INSERT INTO STATION VALUES (13, 'Phoenix', 'AZ', 33, 112)
+INSERT INTO STATION VALUES (44, 'Denver', 'CO', 40, 105)
+INSERT INTO STATION VALUES (66, 'Caribou', 'ME', 47, 68)
+UPDATE STATS SET TEMP_F = 74.9 WHERE ID = 44 AND MONTH = 7
+UPDATE STATS SET RAIN_I = 4.50 WHERE ID = 44 AND MONTH = 7
+DELETE FROM STATS WHERE MONTH = 7 OR ID IN (SELECT ID FROM STATION WHERE LONG_W < 90)
+DELETE FROM STATION WHERE LONG_W < 90
+INSERT INTO STATS VALUES (33,8,27.4,.19)
+UPDATE STATS SET TEMP_F = -100 WHERE ID = 44 AND MONTH = 1
+Select * from Employee where Rowid= select max(Rowid) from Employee
+select * from (Select * from Employee e order by rowid desc) where rownum <=5
+select * from ( select a.*, rownum rnum from ( YOUR_QUERY_GOES_HERE — including the order by ) a where rownum <= N_ROWS ) where rnum >= N_ROWS
+Select * from Employee where Dept_no Not in(Select Department_no from Department)
+Select e.employee_name,m.employee name from Employee e,Employee m where e.Employee_id=m.Manager_id
+SELECT * FROM Customers WHERE Last_Name='Smith'
+SELECT First_Name, Nickname FROM Friends WHERE Nickname LIKE '%brain%'

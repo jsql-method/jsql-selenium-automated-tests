@@ -1,0 +1,1540 @@
+{
+	"info": {
+		"_postman_id": "07a5a499-75c3-4e6c-b268-39a8259cf3f3",
+		"name": "Spring Boot Testy -  Transakcyjność",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "001. Insert without commit (insert) (hash)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "051de300-7ea9-4500-9146-31aee9208f46",
+						"exec": [
+							"pm.environment.unset(\"token\");",
+							"",
+							"let jsonData = JSON.parse(responseBody);",
+							"let token = jsonData.data[0].token;",
+							"console.log(token);",
+							"",
+							"pm.environment.set(\"token\", token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Apikey",
+						"type": "text",
+						"value": "{{ApiKey}}"
+					},
+					{
+						"key": "MemberKey",
+						"type": "text",
+						"value": "{{MemberKey}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n  \"insert into person(name, age) values ('JSQL', 30)\"\r\n]"
+				},
+				"url": "{{host}}"
+			},
+			"response": []
+		},
+		{
+			"name": "001. Insert without commit (insert)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "657962be-ea18-4ea7-ae0c-6872c84c70e3",
+						"exec": [
+							"pm.environment.unset(\"txid\");",
+							"var headers = responseHeaders;",
+							"let txid = headers.TXID;",
+							"pm.environment.set(\"txid\", txid);",
+							"",
+							"pm.environment.unset(\"lastId\");",
+							"let jsonData = JSON.parse(responseBody);",
+							"let lastId = jsonData[0].lastId;",
+							"console.log(lastId);",
+							"pm.environment.set(\"lastId\", lastId);",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Not contains string: duplicate key value violates unique constraint\", function () {",
+							"    var contains = false;",
+							"    var expected = 'duplicate key value violates unique constraint';",
+							"    pm.expect(pm.response.text()).not.to.include(expected);",
+							"});",
+							"",
+							"pm.test(\"Contains string: lastId\", function () {",
+							"    var contains = false;",
+							"    var expected = 'lastId';",
+							"    pm.expect(pm.response.text()).to.include(expected);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "TX",
+						"type": "text",
+						"value": "true"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"token\": \"{{token}}\" \r\n}"
+				},
+				"url": "{{address}}insert"
+			},
+			"response": []
+		},
+		{
+			"name": "001. Insert without commit (select) (hash)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "051de300-7ea9-4500-9146-31aee9208f46",
+						"exec": [
+							"pm.environment.unset(\"token\");",
+							"",
+							"let jsonData = JSON.parse(responseBody);",
+							"let token = jsonData.data[0].token;",
+							"console.log(token);",
+							"",
+							"pm.environment.set(\"token\", token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Apikey",
+						"type": "text",
+						"value": "{{ApiKey}}"
+					},
+					{
+						"key": "MemberKey",
+						"type": "text",
+						"value": "{{MemberKey}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n  \"select * from person where id = :lastId\"\n]"
+				},
+				"url": "{{host}}"
+			},
+			"response": []
+		},
+		{
+			"name": "001. Insert without commit (select)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "bb3089a3-a53e-48e3-b5d9-73eb41f4e07c",
+						"exec": [
+							"pm.test('Not Contains string: \"name\":\"JSQL\" ', function () {\r",
+							"    var contains = false;\r",
+							"    var expected = '\"name\":\"JSQL\"'\r",
+							"    pm.expect(pm.response.text()).not.to.include(expected);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"token\":\n\"{{token}}\",\n\"params\":\n{\"lastId\":{{lastId}}\n}\n}"
+				},
+				"url": "{{address}}select"
+			},
+			"response": []
+		},
+		{
+			"name": "002. Insert with commit (insert) (hash)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "051de300-7ea9-4500-9146-31aee9208f46",
+						"exec": [
+							"pm.environment.unset(\"token\");",
+							"",
+							"let jsonData = JSON.parse(responseBody);",
+							"let token = jsonData.data[0].token;",
+							"console.log(token);",
+							"",
+							"pm.environment.set(\"token\", token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Apikey",
+						"value": "{{ApiKey}}",
+						"type": "text"
+					},
+					{
+						"key": "MemberKey",
+						"value": "{{MemberKey}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n  \"insert into person(name, age) values ('JSQL', 33)\"\r\n]"
+				},
+				"url": "{{host}}"
+			},
+			"response": []
+		},
+		{
+			"name": "002. Insert with commit (insert)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "657962be-ea18-4ea7-ae0c-6872c84c70e3",
+						"exec": [
+							"pm.environment.unset(\"txid\");",
+							"var headers = responseHeaders;",
+							"let txid = headers.TXID;",
+							"pm.environment.set(\"txid\", txid);",
+							"",
+							"pm.environment.unset(\"lastId\");",
+							"let jsonData = JSON.parse(responseBody);",
+							"let lastId = jsonData[0].lastId;",
+							"console.log(lastId);",
+							"pm.environment.set(\"lastId\", lastId);",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Not contains string: duplicate key value violates unique constraint\", function () {",
+							"    var contains = false;",
+							"    var expected = 'duplicate key value violates unique constraint';",
+							"    pm.expect(pm.response.text()).not.to.include(expected);",
+							"});",
+							"",
+							"pm.test(\"Contains string: lastId\", function () {",
+							"    var contains = false;",
+							"    var expected = 'lastId';",
+							"    pm.expect(pm.response.text()).to.include(expected);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "TX",
+						"type": "text",
+						"value": "true"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"token\": \"{{token}}\" \r\n}"
+				},
+				"url": "{{address}}insert"
+			},
+			"response": []
+		},
+		{
+			"name": "002. Insert with commit (COMMIT)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e1d08dd8-6b61-4c99-9771-573d3fa266ac",
+						"exec": [
+							"pm.test(\"Contains string: status ok\", function () {",
+							"    var contains = false;",
+							"    var expected = '\"Status\":\"OK\"';",
+							"    pm.expect(pm.response.text()).to.include(expected);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "TX",
+						"value": "true",
+						"type": "text"
+					},
+					{
+						"key": "TXID",
+						"value": "{{txid}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "{{address}}commit"
+			},
+			"response": []
+		},
+		{
+			"name": "002. Insert with commit (select) (hash)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "051de300-7ea9-4500-9146-31aee9208f46",
+						"exec": [
+							"pm.environment.unset(\"token\");",
+							"",
+							"let jsonData = JSON.parse(responseBody);",
+							"let token = jsonData.data[0].token;",
+							"console.log(token);",
+							"",
+							"pm.environment.set(\"token\", token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Apikey",
+						"value": "{{ApiKey}}",
+						"type": "text"
+					},
+					{
+						"key": "MemberKey",
+						"value": "{{MemberKey}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n  \"select * from person where id = :lastId\"\n]"
+				},
+				"url": "{{host}}"
+			},
+			"response": []
+		},
+		{
+			"name": "002. Insert with commit (select)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "bb3089a3-a53e-48e3-b5d9-73eb41f4e07c",
+						"exec": [
+							"pm.test('Contains string: \"name\":\"JSQL\" ', function () {\r",
+							"    var contains = false;\r",
+							"    var expected = '\"name\":\"JSQL\"'\r",
+							"    pm.expect(pm.response.text()).to.include(expected);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"token\":\n\"{{token}}\",\n\"params\":\n{\"lastId\":{{lastId}}\n}\n}"
+				},
+				"url": "{{address}}select"
+			},
+			"response": []
+		},
+		{
+			"name": "003. Update without commit (update) (hash)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "051de300-7ea9-4500-9146-31aee9208f46",
+						"exec": [
+							"pm.environment.unset(\"token\");",
+							"",
+							"let jsonData = JSON.parse(responseBody);",
+							"let token = jsonData.data[0].token;",
+							"console.log(token);",
+							"",
+							"pm.environment.set(\"token\", token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Apikey",
+						"type": "text",
+						"value": "{{ApiKey}}"
+					},
+					{
+						"key": "MemberKey",
+						"type": "text",
+						"value": "{{MemberKey}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n  \"update person set salary=1000 where id=5\"\n]"
+				},
+				"url": "{{host}}"
+			},
+			"response": []
+		},
+		{
+			"name": "003. Update without commit (update)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "657962be-ea18-4ea7-ae0c-6872c84c70e3",
+						"exec": [
+							"pm.environment.unset(\"txid\");",
+							"var headers = responseHeaders;",
+							"let txid = headers.TXID;",
+							"pm.environment.set(\"txid\", txid);",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Contains string: OK\", function () {",
+							"    var contains = false;",
+							"    var expected = 'OK';",
+							"    pm.expect(pm.response.text()).to.include(expected);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "TX",
+						"type": "text",
+						"value": "true"
+					},
+					{
+						"key": "TXID",
+						"value": "{{txid}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"token\":\n\"{{token}}\"\n}"
+				},
+				"url": "{{address}}update"
+			},
+			"response": []
+		},
+		{
+			"name": "003. Update without commit (select) (hash)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "051de300-7ea9-4500-9146-31aee9208f46",
+						"exec": [
+							"pm.environment.unset(\"token\");",
+							"",
+							"let jsonData = JSON.parse(responseBody);",
+							"let token = jsonData.data[0].token;",
+							"console.log(token);",
+							"",
+							"pm.environment.set(\"token\", token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Apikey",
+						"type": "text",
+						"value": "{{ApiKey}}"
+					},
+					{
+						"key": "MemberKey",
+						"type": "text",
+						"value": "{{MemberKey}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n  \"select * from person where id = 5\"\n]"
+				},
+				"url": "{{host}}"
+			},
+			"response": []
+		},
+		{
+			"name": "003. Update without commit (select)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "bb3089a3-a53e-48e3-b5d9-73eb41f4e07c",
+						"exec": [
+							"pm.test('Contains string: \"salary\": null ', function () {\r",
+							"    var contains = false;\r",
+							"    var expected = '\"salary\":null'\r",
+							"    pm.expect(pm.response.text()).to.include(expected);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"token\":\n\"{{token}}\"\n}"
+				},
+				"url": "{{address}}select"
+			},
+			"response": []
+		},
+		{
+			"name": "004. Update with commit (insert)(hash)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "051de300-7ea9-4500-9146-31aee9208f46",
+						"exec": [
+							"pm.environment.unset(\"token\");",
+							"",
+							"let jsonData = JSON.parse(responseBody);",
+							"let token = jsonData.data[0].token;",
+							"console.log(token);",
+							"",
+							"pm.environment.set(\"token\", token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Apikey",
+						"type": "text",
+						"value": "{{ApiKey}}"
+					},
+					{
+						"key": "MemberKey",
+						"type": "text",
+						"value": "{{MemberKey}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n  \"insert into person(name, age) values ('JSQL', 40)\"\r\n]"
+				},
+				"url": "{{host}}"
+			},
+			"response": []
+		},
+		{
+			"name": "004. Update with commit (insert)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "657962be-ea18-4ea7-ae0c-6872c84c70e3",
+						"exec": [
+							"pm.environment.unset(\"txid\");",
+							"var headers = responseHeaders;",
+							"let txid = headers.TXID;",
+							"pm.environment.set(\"txid\", txid);",
+							"",
+							"pm.environment.unset(\"lastId\");",
+							"let jsonData = JSON.parse(responseBody);",
+							"let lastId = jsonData[0].lastId;",
+							"console.log(lastId);",
+							"pm.environment.set(\"lastId\", lastId);",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Not contains string: duplicate key value violates unique constraint\", function () {",
+							"    var contains = false;",
+							"    var expected = 'duplicate key value violates unique constraint';",
+							"    pm.expect(pm.response.text()).not.to.include(expected);",
+							"});",
+							"",
+							"pm.test(\"Contains string: lastId\", function () {",
+							"    var contains = false;",
+							"    var expected = 'lastId';",
+							"    pm.expect(pm.response.text()).to.include(expected);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "TX",
+						"type": "text",
+						"value": "true"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"token\": \"{{token}}\" \r\n}"
+				},
+				"url": "{{address}}insert"
+			},
+			"response": []
+		},
+		{
+			"name": "004. Update with commit (update) (hash)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "051de300-7ea9-4500-9146-31aee9208f46",
+						"exec": [
+							"pm.environment.unset(\"token\");",
+							"",
+							"let jsonData = JSON.parse(responseBody);",
+							"let token = jsonData.data[0].token;",
+							"console.log(token);",
+							"",
+							"pm.environment.set(\"token\", token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Apikey",
+						"value": "{{ApiKey}}",
+						"type": "text"
+					},
+					{
+						"key": "MemberKey",
+						"value": "{{MemberKey}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n  \"update person set salary=1000 where id = :lastId\"\n]"
+				},
+				"url": "{{host}}"
+			},
+			"response": []
+		},
+		{
+			"name": "004. Update with commit (update)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "657962be-ea18-4ea7-ae0c-6872c84c70e3",
+						"exec": [
+							"pm.environment.unset(\"txid\");",
+							"var headers = responseHeaders;",
+							"let txid = headers.TXID;",
+							"pm.environment.set(\"txid\", txid);",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Contains string: OK\", function () {",
+							"    var contains = false;",
+							"    var expected = 'OK';",
+							"    pm.expect(pm.response.text()).to.include(expected);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "TX",
+						"type": "text",
+						"value": "true"
+					},
+					{
+						"key": "TXID",
+						"value": "{{txid}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"token\":\n\"{{token}}\",\n\"params\":\n{\"lastId\":{{lastId}}\n}\n}"
+				},
+				"url": "{{address}}update"
+			},
+			"response": []
+		},
+		{
+			"name": "004. Update with commit (COMMIT)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e1d08dd8-6b61-4c99-9771-573d3fa266ac",
+						"exec": [
+							"pm.test(\"Contains string: status ok\", function () {",
+							"    var contains = false;",
+							"    var expected = '\"Status\":\"OK\"';",
+							"    pm.expect(pm.response.text()).to.include(expected);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "TX",
+						"type": "text",
+						"value": "true"
+					},
+					{
+						"key": "TXID",
+						"type": "text",
+						"value": "{{txid}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "{{address}}commit"
+			},
+			"response": []
+		},
+		{
+			"name": "004. Update with commit (select) (hash)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "051de300-7ea9-4500-9146-31aee9208f46",
+						"exec": [
+							"pm.environment.unset(\"token\");",
+							"",
+							"let jsonData = JSON.parse(responseBody);",
+							"let token = jsonData.data[0].token;",
+							"console.log(token);",
+							"",
+							"pm.environment.set(\"token\", token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Apikey",
+						"type": "text",
+						"value": "{{ApiKey}}"
+					},
+					{
+						"key": "MemberKey",
+						"type": "text",
+						"value": "{{MemberKey}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n  \"select * from person where id = :lastId\"\n]"
+				},
+				"url": "{{host}}"
+			},
+			"response": []
+		},
+		{
+			"name": "004. Update with commit (select)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "bb3089a3-a53e-48e3-b5d9-73eb41f4e07c",
+						"exec": [
+							"pm.test('Contains string: \"salary\":1000 ', function () {\r",
+							"    var contains = false;\r",
+							"    var expected = '\"salary\":1000'\r",
+							"    pm.expect(pm.response.text()).to.include(expected);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"token\":\n\"{{token}}\",\n\"params\":\n{\"lastId\":{{lastId}}\n}\n}"
+				},
+				"url": "{{address}}select"
+			},
+			"response": []
+		},
+		{
+			"name": "005. Delete without commit (delete) (hash)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "051de300-7ea9-4500-9146-31aee9208f46",
+						"exec": [
+							"pm.environment.unset(\"token\");",
+							"",
+							"let jsonData = JSON.parse(responseBody);",
+							"let token = jsonData.data[0].token;",
+							"console.log(token);",
+							"",
+							"pm.environment.set(\"token\", token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Apikey",
+						"type": "text",
+						"value": "{{ApiKey}}"
+					},
+					{
+						"key": "MemberKey",
+						"type": "text",
+						"value": "{{MemberKey}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n  \"delete from person where id = 5\"\n]"
+				},
+				"url": "{{host}}"
+			},
+			"response": []
+		},
+		{
+			"name": "005. Delete without commit (delete)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "657962be-ea18-4ea7-ae0c-6872c84c70e3",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Contains string: OK\", function () {",
+							"    var contains = false;",
+							"    var expected = 'OK';",
+							"    pm.expect(pm.response.text()).to.include(expected);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "TX",
+						"type": "text",
+						"value": "true"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"token\":\n\"{{token}}\"\n}"
+				},
+				"url": "{{address}}delete"
+			},
+			"response": []
+		},
+		{
+			"name": "005. Delete without commit (select) (hash)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "051de300-7ea9-4500-9146-31aee9208f46",
+						"exec": [
+							"pm.environment.unset(\"token\");",
+							"",
+							"let jsonData = JSON.parse(responseBody);",
+							"let token = jsonData.data[0].token;",
+							"console.log(token);",
+							"",
+							"pm.environment.set(\"token\", token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Apikey",
+						"type": "text",
+						"value": "{{ApiKey}}"
+					},
+					{
+						"key": "MemberKey",
+						"type": "text",
+						"value": "{{MemberKey}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n  \"select * from person where id = 5\"\n]"
+				},
+				"url": "{{host}}"
+			},
+			"response": []
+		},
+		{
+			"name": "005. Delete without commit (select)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "bb3089a3-a53e-48e3-b5d9-73eb41f4e07c",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test('Contains string: \"id\":5 ', function () {\r",
+							"    var contains = false;\r",
+							"    var expected = '\"id\":5'\r",
+							"    pm.expect(pm.response.text()).to.include(expected);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"token\":\n\"{{token}}\"\n}"
+				},
+				"url": "{{address}}select"
+			},
+			"response": []
+		},
+		{
+			"name": "006. Delete with commit (insert) (hash)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "051de300-7ea9-4500-9146-31aee9208f46",
+						"exec": [
+							"pm.environment.unset(\"token\");",
+							"",
+							"let jsonData = JSON.parse(responseBody);",
+							"let token = jsonData.data[0].token;",
+							"console.log(token);",
+							"",
+							"pm.environment.set(\"token\", token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Apikey",
+						"type": "text",
+						"value": "{{ApiKey}}"
+					},
+					{
+						"key": "MemberKey",
+						"type": "text",
+						"value": "{{MemberKey}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n  \"insert into person(name, age) values ('JSQL', 30)\"\r\n]"
+				},
+				"url": "{{host}}"
+			},
+			"response": []
+		},
+		{
+			"name": "006. Delete with commit (insert)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "657962be-ea18-4ea7-ae0c-6872c84c70e3",
+						"exec": [
+							"pm.environment.unset(\"txid\");",
+							"var headers = responseHeaders;",
+							"let txid = headers.TXID;",
+							"pm.environment.set(\"txid\", txid);",
+							"",
+							"pm.environment.unset(\"lastId\");",
+							"let jsonData = JSON.parse(responseBody);",
+							"let lastId = jsonData[0].lastId;",
+							"console.log(lastId);",
+							"pm.environment.set(\"lastId\", lastId);",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Not contains string: duplicate key value violates unique constraint\", function () {",
+							"    var contains = false;",
+							"    var expected = 'duplicate key value violates unique constraint';",
+							"    pm.expect(pm.response.text()).not.to.include(expected);",
+							"});",
+							"",
+							"pm.test(\"Contains string: lastId\", function () {",
+							"    var contains = false;",
+							"    var expected = 'lastId';",
+							"    pm.expect(pm.response.text()).to.include(expected);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "TX",
+						"type": "text",
+						"value": "true"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"token\": \"{{token}}\" \r\n}"
+				},
+				"url": "{{address}}insert"
+			},
+			"response": []
+		},
+		{
+			"name": "006. Delete with commit (delete) (hash)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "051de300-7ea9-4500-9146-31aee9208f46",
+						"exec": [
+							"pm.environment.unset(\"token\");",
+							"",
+							"let jsonData = JSON.parse(responseBody);",
+							"let token = jsonData.data[0].token;",
+							"console.log(token);",
+							"",
+							"pm.environment.set(\"token\", token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Apikey",
+						"type": "text",
+						"value": "{{ApiKey}}"
+					},
+					{
+						"key": "MemberKey",
+						"type": "text",
+						"value": "{{MemberKey}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n  \"delete from person where id = :lastId\"\n]"
+				},
+				"url": "{{host}}"
+			},
+			"response": []
+		},
+		{
+			"name": "006. Delete with commit (delete)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "657962be-ea18-4ea7-ae0c-6872c84c70e3",
+						"exec": [
+							"pm.environment.unset(\"txid\");",
+							"var headers = responseHeaders;",
+							"let txid = headers.TXID;",
+							"pm.environment.set(\"txid\", txid);",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Contains string: OK\", function () {",
+							"    var contains = false;",
+							"    var expected = 'OK';",
+							"    pm.expect(pm.response.text()).to.include(expected);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "TX",
+						"type": "text",
+						"value": "true"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"token\":\n\"{{token}}\",\n\"params\":\n{\"lastId\":{{lastId}}\n}\n}"
+				},
+				"url": "{{address}}delete"
+			},
+			"response": []
+		},
+		{
+			"name": "006. Delete with commit (COMMIT)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e1d08dd8-6b61-4c99-9771-573d3fa266ac",
+						"exec": [
+							"pm.test(\"Contains string: status ok\", function () {",
+							"    var contains = false;",
+							"    var expected = '\"Status\":\"OK\"';",
+							"    pm.expect(pm.response.text()).to.include(expected);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "TX",
+						"type": "text",
+						"value": "true"
+					},
+					{
+						"key": "TXID",
+						"type": "text",
+						"value": "{{txid}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "{{address}}commit"
+			},
+			"response": []
+		},
+		{
+			"name": "006. Delete with commit (select) (hash)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "051de300-7ea9-4500-9146-31aee9208f46",
+						"exec": [
+							"pm.environment.unset(\"token\");",
+							"",
+							"let jsonData = JSON.parse(responseBody);",
+							"let token = jsonData.data[0].token;",
+							"console.log(token);",
+							"",
+							"pm.environment.set(\"token\", token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Apikey",
+						"type": "text",
+						"value": "{{ApiKey}}"
+					},
+					{
+						"key": "MemberKey",
+						"type": "text",
+						"value": "{{MemberKey}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n  \"select * from person where id = :lastId\"\n]"
+				},
+				"url": "{{host}}"
+			},
+			"response": []
+		},
+		{
+			"name": "006. Delete with commit (select)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "bb3089a3-a53e-48e3-b5d9-73eb41f4e07c",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test('Not Contains string: \"name\":\"JSQL\" ', function () {\r",
+							"    var contains = false;\r",
+							"    var expected = '\"name\":\"JSQL\"'\r",
+							"    pm.expect(pm.response.text()).not.to.include(expected);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"token\":\n\"{{token}}\",\n\"params\":\n{\"lastId\":{{lastId}}\n}\n}"
+				},
+				"url": "{{address}}select"
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "c98b51db-47a4-44fe-9061-bc7431ef5c7b",
+				"type": "text/javascript",
+				"exec": [
+					"//test.jsql.pl",
+					"pm.variables.set(\"host\", \"https://test-api.jsql.it/api/request/hashes\");",
+					"pm.variables.set(\"ApiKey\", \"==QNuwzXoRS2sAJ8uSjX1BG2fVGN2GoYZTUXoesIFdTg==oV08XxuBcjB2Yg6P7pkB\");",
+					"pm.variables.set(\"MemberKey\", \"chWaJqS9fxjxXaP3dTtVhA==\");",
+					"",
+					"pm.variables.set(\"address\", \"http://localhost:18088/\");",
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "f262c433-71b8-4d51-a3f9-01bcf5c527e5",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

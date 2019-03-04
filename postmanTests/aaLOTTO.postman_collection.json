@@ -1,0 +1,1432 @@
+{
+	"info": {
+		"_postman_id": "72580701-6d3b-4fe5-99e9-33ca733d8536",
+		"name": "aaLOTTO",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "/api/login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e2c4c983-0fb4-4590-8dca-751b0206e18b",
+						"exec": [
+							"pm.environment.unset(\"session\");",
+							"let jsonData = JSON.parse(responseBody);",
+							"let session = jsonData.data.session;",
+							"console.log(session);",
+							"pm.environment.set(\"session\", session);",
+							"",
+							"pm.test(\"Status code is 200\", function() {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Contains string: 'session' \", function () {",
+							"    var contains = false;",
+							"    var expected = \"session\";",
+							"    pm.expect(pm.response.text()).to.include(expected);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"nowy@user.pl\",\n\t\"password\": \"pass\"\n}"
+				},
+				"url": "{{address}}/api/login"
+			},
+			"response": []
+		},
+		{
+			"name": "/api/register",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e2c4c983-0fb4-4590-8dca-751b0206e18b",
+						"exec": [
+							"pm.test(\"Status code is 200\", function() {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Contains string: 'User registered' \", function () {",
+							"    var contains = false;",
+							"    var expected = \"User registered\";",
+							"    pm.expect(pm.response.text()).to.include(expected);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\":null,\n\t\"name\":\"sd\",\n\t\"surname\":\"dsa\",\n\t\"pesel\":\"\",\n\t\"email\":\"appdev@freeweb.email\",\n\t\"password\":\"test123#\",\n\t\"session\":\"\",\n\t\"active\":0,\n\t\"active_token\":\"\",\n\t\"birth_date\":\"2019-03-01\",\n\t\"newsletter\":0\n}"
+				},
+				"url": "{{address}}/api/register"
+			},
+			"response": []
+		},
+		{
+			"name": "/api/admin/users",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "552892cb-9079-43d1-bb47-6d07e1b6c210",
+						"exec": [
+							"pm.test(\"Status code is 200\", function() {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Contains string: 'surname' \", function () {",
+							"    var contains = false;",
+							"    var expected = \"surname\";",
+							"    pm.expect(pm.response.text()).to.include(expected);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "session",
+						"value": "{{session}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "{{address}}/api/admin/users"
+			},
+			"response": []
+		},
+		{
+			"name": "/api/admin/user/:id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "39244f21-11b5-4ce3-a814-9e6ea9ad0772",
+						"exec": [
+							"pm.test(\"Status code is 200\", function() {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Contains string: 'surname' \", function() {",
+							"    var contains = false;",
+							"    var expected = \"surname\";",
+							"    pm.expect(pm.response.text()).to.include(expected);",
+							"});",
+							"",
+							"pm.test('Contains string: \"id\":1 ', function() {",
+							"    var contains = false;",
+							"    var expected = '\"id\":1';",
+							"    pm.expect(pm.response.text()).to.include(expected);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "session",
+						"value": "{{session}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "{{address}}/api/admin/user/1"
+			},
+			"response": []
+		},
+		{
+			"name": "/api/admin/userstoken",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "de910902-8913-4fd5-8b56-7bdfe07bf49f",
+						"exec": [
+							"pm.test(\"Status code is 200\", function() {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Contains string: 'surname' \", function() {",
+							"    var contains = false;",
+							"    var expected = \"surname\";",
+							"    pm.expect(pm.response.text()).to.include(expected);",
+							"});",
+							"",
+							"pm.test('Contains string: \"id\":3 ', function() {",
+							"    var contains = false;",
+							"    var expected = '\"id\":3';",
+							"    pm.expect(pm.response.text()).to.include(expected);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "session",
+						"type": "text",
+						"value": "{{session}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "{{address}}/api/admin/userstoken"
+			},
+			"response": []
+		},
+		{
+			"name": "/api/admin/userstoken",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "65458fce-179b-408d-8b4a-2f4df61022d6",
+						"exec": [
+							"pm.test(\"Status code is 200\", function() {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test('Contains string: OK ', function() {",
+							"    var contains = false;",
+							"    var expected = 'OK';",
+							"    pm.expect(pm.response.text()).to.include(expected);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "session",
+						"type": "text",
+						"value": "{{session}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"newsletter\":1\n}"
+				},
+				"url": "{{address}}/api/admin/userstoken"
+			},
+			"response": []
+		},
+		{
+			"name": "/api/active/:id   (:id = token)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "65458fce-179b-408d-8b4a-2f4df61022d6",
+						"exec": [
+							"pm.test(\"Status code is 200\", function() {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test('Contains string: \"message\": \"Activation done\" ', function() {",
+							"    var contains = false;",
+							"    var expected = '\"message\":\"Activation done\"';",
+							"    pm.expect(pm.response.text()).to.include(expected);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "{{address}}/api/active/6NALpxXaXi84Leo5EnfbHhclSiGX7AlwBnjD3KtxFPcPtgA7eH"
+			},
+			"response": []
+		},
+		{
+			"name": "/api/changepass",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "65458fce-179b-408d-8b4a-2f4df61022d6",
+						"exec": [
+							"pm.test(\"Status code is 200\", function() {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test('Contains string: \"result\":\"OK\" ', function() {",
+							"    var contains = false;",
+							"    var expected = '\"result\":\"OK';",
+							"    pm.expect(pm.response.text()).to.include(expected);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "session",
+						"type": "text",
+						"value": "{{session}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"oldPassword\" : \"pass\",\n\t\"newPassword\" : \"pass\"\n}"
+				},
+				"url": "{{address}}/api/changepass"
+			},
+			"response": []
+		},
+		{
+			"name": "/api/remindpass",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "65458fce-179b-408d-8b4a-2f4df61022d6",
+						"exec": [
+							"pm.test(\"Status code is 200\", function() {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test('Contains string: Link for reset pass send! ', function() {",
+							"    var contains = false;",
+							"    var expected = 'Link for reset pass send!';",
+							"    pm.expect(pm.response.text()).to.include(expected);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "session",
+						"type": "text",
+						"value": "{{session}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"email\":\"appdev@nextmail.info\"}"
+				},
+				"url": "{{address}}/api/remindpass"
+			},
+			"response": []
+		},
+		{
+			"name": "/api/changeremindedpass",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "65458fce-179b-408d-8b4a-2f4df61022d6",
+						"exec": [
+							"pm.test(\"Status code is 200\", function() {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test('Contains string: New password saved. ', function() {",
+							"    var contains = false;",
+							"    var expected = 'New password saved.';",
+							"    pm.expect(pm.response.text()).to.include(expected);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "session",
+						"type": "text",
+						"value": "{{session}}",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"token\":\"6NALpxXaXi84Leo5EnfbHhclSiGX7AlwBnjD3KtxFPcPtgA7eH\",\n\t\"password\":\"test123#\"\n}"
+				},
+				"url": "{{address}}/api/changeremindedpass/"
+			},
+			"response": []
+		},
+		{
+			"name": "/api/bet_lotto",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "65458fce-179b-408d-8b4a-2f4df61022d6",
+						"exec": [
+							"pm.test(\"Status code is 200\", function() {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test('Contains string: \"description\":\"Lotto numbers added\" ', function() {",
+							"    var contains = false;",
+							"    var expected = '\"description\":\"Lotto numbers added\"';",
+							"    pm.expect(pm.response.text()).to.include(expected);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "session",
+						"type": "text",
+						"value": "{{session}}",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"lotto_numbers\":\"[13,14,24,30,44,49]\",\"coupon_id\":\"gv5zn9tctfaesfszfwz3jn\"}\r\n"
+				},
+				"url": "{{address}}/api/bet_lotto"
+			},
+			"response": []
+		},
+		{
+			"name": "/api/check_lotto",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "65458fce-179b-408d-8b4a-2f4df61022d6",
+						"exec": [
+							"pm.test(\"Status code is 200\", function() {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test('Contains string: \"description\": \"Lotto numbers repeated\" ', function() {",
+							"    var contains = false;",
+							"    var expected = '\"description\":\"Lotto numbers repeated\"';",
+							"    pm.expect(pm.response.text()).to.include(expected);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "session",
+						"type": "text",
+						"value": "{{session}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"lotto_numbers\" : \"[13,14,24,30,44,49]\"\n}"
+				},
+				"url": "{{address}}/api/check_lotto"
+			},
+			"response": []
+		},
+		{
+			"name": "/api/wallet",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "65458fce-179b-408d-8b4a-2f4df61022d6",
+						"exec": [
+							"pm.test(\"Status code is 200\", function() {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test('Contains string: amount ', function() {",
+							"    var contains = false;",
+							"    var expected = 'amount';",
+							"    pm.expect(pm.response.text()).to.include(expected);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "session",
+						"type": "text",
+						"value": "{{session}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"session\":\"{{session}}\"}"
+				},
+				"url": "{{address}}/api/wallet"
+			},
+			"response": []
+		},
+		{
+			"name": "/api/update_wallet",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "65458fce-179b-408d-8b4a-2f4df61022d6",
+						"exec": [
+							"pm.test(\"Status code is 200\", function() {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test('Contains string: balance update ', function() {",
+							"    var contains = false;",
+							"    var expected = 'balance update';",
+							"    pm.expect(pm.response.text()).to.include(expected);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "session",
+						"type": "text",
+						"value": "{{session}}",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"session\":\"{{session}}\"\n\t\n}"
+				},
+				"url": "{{address}}/api/update_wallet"
+			},
+			"response": []
+		},
+		{
+			"name": "/api/upload =====",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6c4bf872-0d72-4502-bf5b-92241ae1c79a",
+						"exec": [
+							"pm.test(\"Status code is 200\", function() {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Contains string: 'surname' \", function() {",
+							"    var contains = false;",
+							"    var expected = \"surname\";",
+							"    pm.expect(pm.response.text()).to.include(expected);",
+							"});",
+							"",
+							"pm.test('Contains string: \"id\":1 ', function() {",
+							"    var contains = false;",
+							"    var expected = '\"id\":1';",
+							"    pm.expect(pm.response.text()).to.include(expected);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "session",
+						"type": "text",
+						"value": "{{session}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "{{address}}/api/upload"
+			},
+			"response": []
+		},
+		{
+			"name": "/api/articles",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "22b9a540-7a1f-443d-8baf-65dc5a180934",
+						"exec": [
+							"pm.test(\"Status code is 200\", function() {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Contains string: 'title' \", function() {",
+							"    var contains = false;",
+							"    var expected = \"title\";",
+							"    pm.expect(pm.response.text()).to.include(expected);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "{{address}}/api/articles"
+			},
+			"response": []
+		},
+		{
+			"name": "/api/article/:id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f5993a4a-8d9e-41b3-a73a-59fd9a4179b9",
+						"exec": [
+							"pm.test(\"Status code is 200\", function() {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Contains string: 'title' \", function() {",
+							"    var contains = false;",
+							"    var expected = \"title\";",
+							"    pm.expect(pm.response.text()).to.include(expected);",
+							"});",
+							"",
+							"pm.test('Contains string: \"id\":2 ', function() {",
+							"    var contains = false;",
+							"    var expected = '\"id\":2';",
+							"    pm.expect(pm.response.text()).to.include(expected);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "{{address}}/api/article/2"
+			},
+			"response": []
+		},
+		{
+			"name": "/api/article/:id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8304bdbd-fef3-4b6b-b85e-2b2448ee3474",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test('Contains string: \"description\":\"Nothing changed.\" ', function() {",
+							"    var contains = false;",
+							"    var expected = '\"description\":\"Nothing changed.\"';",
+							"    pm.expect(pm.response.text()).to.include(expected);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "session",
+						"value": "{{session}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\": \"20\",\n\t\"title\": \"postman111\",\n\t\"content\": \"postman test\",\n\t\"description\": \"strzał z postmana\",\n\t\"main\": \"0\",\n\t\"visible\": \"1\",\n\t\"image\": \"theme\",\n\t\"author\": \"postman\",\n\t\"insertDate\": \"2019-02-28\"\n}"
+				},
+				"url": "{{address}}/api/article/20"
+			},
+			"response": []
+		},
+		{
+			"name": "/api/article/:lastId",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "afcaaaa9-5f2b-4371-937a-96bf335cd0de",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test('Contains string: \"description\":\"Article saved.\" ', function() {",
+							"    var contains = false;",
+							"    var expected = '\"description\":\"Article saved.\"';",
+							"    pm.expect(pm.response.text()).to.include(expected);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "session",
+						"type": "text",
+						"value": "{{session}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"title\": \"postman\",\n\t\"content\": \"postman test\",\n\t\"description\": \"strzał z postmana\",\n\t\"main\": \"0\",\n\t\"visible\": \"1\",\n\t\"image\": \"theme\",\n\t\"author\": \"postman\",\n\t\"insertDate\": \"2019-02-28\"\n}"
+				},
+				"url": "{{address}}/api/article/1"
+			},
+			"response": []
+		},
+		{
+			"name": "/api/article/:id",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "session",
+						"type": "text",
+						"value": "{{session}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "{{address}}/api/article/19"
+			},
+			"response": []
+		},
+		{
+			"name": "/api/games",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f5993a4a-8d9e-41b3-a73a-59fd9a4179b9",
+						"exec": [
+							"pm.test(\"Status code is 200\", function() {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test('Contains string: \"gameType\":\"MINILOTTO\" ', function() {",
+							"    var contains = false;",
+							"    var expected = '\"gameType\":\"MINILOTTO\"';",
+							"    pm.expect(pm.response.text()).to.include(expected);",
+							"});",
+							"",
+							"pm.test('Contains string: \"gameType\":\"LOTTO\" ', function() {",
+							"    var contains = false;",
+							"    var expected = '\"gameType\":\"LOTTO\"';",
+							"    pm.expect(pm.response.text()).to.include(expected);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "{{address}}/api/games"
+			},
+			"response": []
+		},
+		{
+			"name": "/api/game/:name ==============",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f5993a4a-8d9e-41b3-a73a-59fd9a4179b9",
+						"exec": [
+							"pm.test(\"Status code is 200\", function() {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test('NOT Contains string: \"gameType\":\"MINILOTTO\" ', function() {",
+							"    var contains = false;",
+							"    var expected = '\"gameType\":\"MINILOTTO\"';",
+							"    pm.expect(pm.response.text()).not.to.include(expected);",
+							"});",
+							"",
+							"pm.test('Contains string: \"gameType\":\"LOTTO\" ', function() {",
+							"    var contains = false;",
+							"    var expected = '\"gameType\":\"LOTTO\"';",
+							"    pm.expect(pm.response.text()).to.include(expected);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{address}}/api/games?name=LOTTO",
+					"host": [
+						"{{address}}"
+					],
+					"path": [
+						"api",
+						"games"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "LOTTO"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/texts",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f5993a4a-8d9e-41b3-a73a-59fd9a4179b9",
+						"exec": [
+							"pm.test(\"Status code is 200\", function() {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test('NOT Contains string: \"id\":1 ', function() {",
+							"    var contains = false;",
+							"    var expected = '\"id\":1';",
+							"    pm.expect(pm.response.text()).to.include(expected);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "{{address}}/api/texts"
+			},
+			"response": []
+		},
+		{
+			"name": "/api/text/:id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f5993a4a-8d9e-41b3-a73a-59fd9a4179b9",
+						"exec": [
+							"pm.test(\"Status code is 200\", function() {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test('NOT Contains string: \"id\":1 ', function() {",
+							"    var contains = false;",
+							"    var expected = '\"id\":1';",
+							"    pm.expect(pm.response.text()).to.include(expected);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "id",
+						"value": "2",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{address}}/api/texts?id=1",
+					"host": [
+						"{{address}}"
+					],
+					"path": [
+						"api",
+						"texts"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/text/:id ============",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f5993a4a-8d9e-41b3-a73a-59fd9a4179b9",
+						"exec": [
+							"pm.test(\"Status code is 200\", function() {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test('NOT Contains string: \"id\":1 ', function() {",
+							"    var contains = false;",
+							"    var expected = '\"id\":1';",
+							"    pm.expect(pm.response.text()).to.include(expected);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "session",
+						"value": "{{session}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\": \"3\",\n\t\"content\": \"postman test\"\n}"
+				},
+				"url": {
+					"raw": "{{address}}/api/texts?id=3",
+					"host": [
+						"{{address}}"
+					],
+					"path": [
+						"api",
+						"texts"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "3"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/translations",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f5993a4a-8d9e-41b3-a73a-59fd9a4179b9",
+						"exec": [
+							"pm.test(\"Status code is 200\", function() {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test('NOT Contains string: \"id\":1 ', function() {",
+							"    var contains = false;",
+							"    var expected = '\"id\":1';",
+							"    pm.expect(pm.response.text()).to.include(expected);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "{{address}}/api/translations"
+			},
+			"response": []
+		},
+		{
+			"name": "/api/translations/:lang ===========",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f5993a4a-8d9e-41b3-a73a-59fd9a4179b9",
+						"exec": [
+							"pm.test(\"Status code is 200\", function() {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test('NOT Contains string: \"id\":1 ', function() {",
+							"    var contains = false;",
+							"    var expected = '\"id\":1';",
+							"    pm.expect(pm.response.text()).to.include(expected);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{address}}/api/translations/:lang",
+					"host": [
+						"{{address}}"
+					],
+					"path": [
+						"api",
+						"translations",
+						":lang"
+					],
+					"variable": [
+						{
+							"key": "lang",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/translations/:id =============",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f5993a4a-8d9e-41b3-a73a-59fd9a4179b9",
+						"exec": [
+							"pm.test(\"Status code is 200\", function() {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test('NOT Contains string: \"id\":1 ', function() {",
+							"    var contains = false;",
+							"    var expected = '\"id\":1';",
+							"    pm.expect(pm.response.text()).to.include(expected);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{address}}/api/translations",
+					"host": [
+						"{{address}}"
+					],
+					"path": [
+						"api",
+						"translations"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": "3",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/drawhistory/:name ====",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f5993a4a-8d9e-41b3-a73a-59fd9a4179b9",
+						"exec": [
+							"pm.test(\"Status code is 200\", function() {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test('NOT Contains string: \"id\":1 ', function() {",
+							"    var contains = false;",
+							"    var expected = '\"id\":1';",
+							"    pm.expect(pm.response.text()).to.include(expected);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "session",
+						"value": "{{session}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "{{address}}/api/drawhistory/dsa"
+			},
+			"response": []
+		},
+		{
+			"name": "/api/drawhistory",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f5993a4a-8d9e-41b3-a73a-59fd9a4179b9",
+						"exec": [
+							"pm.test(\"Status code is 200\", function() {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test('NOT Contains string: \"id\":1 ', function() {",
+							"    var contains = false;",
+							"    var expected = '\"id\":1';",
+							"    pm.expect(pm.response.text()).to.include(expected);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "{{address}}/api/drawhistory"
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "7db732c4-f9c8-4dcc-a7da-fa4f4a0bca02",
+				"type": "text/javascript",
+				"exec": [
+					"pm.variables.set(\"address\", \"http://localhost:3000\");"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "741b0fa2-8802-4d68-b831-1c14073e35bd",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

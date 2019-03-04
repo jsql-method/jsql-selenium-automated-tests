@@ -1,0 +1,5 @@
+Krzysztof,firma,krzychu@firma.pl,password
+Krzysztof,firma,krzychu2@firma.pl,password2
+Krzysztof,firma,krzychu3@firma.pl,password3
+Krzysztof,firma,krzychu4@firma.pl,password4
+Krzysztof,firma,krzychu5@firma.pl,password5  
