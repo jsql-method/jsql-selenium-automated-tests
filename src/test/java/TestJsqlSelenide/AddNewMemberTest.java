@@ -7,15 +7,14 @@
 
  import com.codeborne.selenide.Configuration;
  import com.codeborne.selenide.ElementsCollection;
+ import org.junit.AfterClass;
  import org.junit.Assert;
  import org.junit.BeforeClass;
  import org.junit.Test;
  import org.openqa.selenium.By;
 
  import static com.codeborne.selenide.Condition.exist;
- import static com.codeborne.selenide.Selenide.$;
- import static com.codeborne.selenide.Selenide.$$;
- import static com.codeborne.selenide.Selenide.open;
+ import static com.codeborne.selenide.Selenide.*;
  import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 
  public class AddNewMemberTest {
@@ -145,5 +144,10 @@
          $(By.xpath("//button[contains(.,'Ok')]")).click();
 
          Assert.assertTrue("Not true", (assignButtonsSize == unassignButtonsSize && assignButtonsSize == assignButtonsNew));
+     }
+
+     @AfterClass
+     public static void afterSuite() {
+         close();
      }
  }

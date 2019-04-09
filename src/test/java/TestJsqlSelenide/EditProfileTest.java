@@ -6,6 +6,7 @@
  package TestJsqlSelenide;
 
  import com.codeborne.selenide.Configuration;
+ import org.junit.AfterClass;
  import org.junit.Assert;
  import org.junit.Before;
  import org.junit.Test;
@@ -161,6 +162,11 @@
          $(By.xpath("//button[contains(.,'Submit')]")).click();
          $(By.xpath("//button[contains(.,'Ok')]")).click();
 
+         close();
+     }
+
+     @AfterClass
+     public static void afterSuite() {
          close();
      }
  }

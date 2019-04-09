@@ -7,6 +7,7 @@
 
  import TestJsqlJunit.SetUp;
  import com.codeborne.selenide.Configuration;
+ import org.junit.AfterClass;
  import org.junit.Assert;
  import org.junit.Before;
  import org.junit.Test;
@@ -87,6 +88,11 @@
          //Check if DevKey was copied correctly
          String copiedDevKey = $(By.xpath("//input[@id='firstName']")).getAttribute("value");
          Assert.assertEquals(displayedDevKey, copiedDevKey);
+         close();
+     }
+
+     @AfterClass
+     public static void afterSuite() {
          close();
      }
  }

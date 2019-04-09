@@ -10,9 +10,7 @@ import org.junit.*;
 import org.junit.Test;
 import org.openqa.selenium.By;
 
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$$;
-import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 
  public class AddApiTest {
@@ -58,5 +56,10 @@ import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 
          Assert.assertNotEquals(numberOfApi, numberOfApi2);
 
+     }
+
+     @AfterClass
+     public static void afterSuite() {
+         close();
      }
  }

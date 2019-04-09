@@ -139,7 +139,7 @@
          close();
      }
 
-//     @Test
+     //     @Test
 //     public void admin() throws InterruptedException {
 //         //login into page
 //         String userEmail = "admin@2";
@@ -156,4 +156,8 @@
 //         Assert.assertTrue(!resultMap.get("isDevKeyPresent"));
 //
 //     }
+     @AfterClass
+     public static void afterSuite() {
+         close();
+     }
  }

@@ -3,21 +3,20 @@
   * Licensed under the Commercial license, see www.jsql.it/terms-and-conditions
   */
 
-package TestJsqlSelenide;
+ package TestJsqlSelenide;
 
-import TestJsqlJunit.SetUp;
-import com.codeborne.selenide.Configuration;
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import org.openqa.selenium.By;
+ import TestJsqlJunit.SetUp;
+ import com.codeborne.selenide.Configuration;
+ import org.junit.AfterClass;
+ import org.junit.Assert;
+ import org.junit.BeforeClass;
+ import org.junit.Test;
+ import org.openqa.selenium.By;
 
-import static com.codeborne.selenide.Condition.exist;
-import static com.codeborne.selenide.Condition.visible;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$$;
-import static com.codeborne.selenide.Selenide.open;
-import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
+ import static com.codeborne.selenide.Condition.exist;
+ import static com.codeborne.selenide.Condition.visible;
+ import static com.codeborne.selenide.Selenide.*;
+ import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 
  public class AddAdminTest {
 
@@ -25,7 +24,7 @@ import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
      public static void setUp() {
          //getDriver selenium and login into homepage
 //         WebDriverRunner.getWebDriver() = SetUp.getDriver();
-         Configuration.browser="firefox";
+         Configuration.browser = "firefox";
          Configuration.timeout = 15000;
 
          open("https://customer.jsql.it/auth/login");
@@ -168,5 +167,10 @@ import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 
          //check if number of admin is correct
          Assert.assertEquals(numberOfAdminsNew, (numberOfAdmins + 2));
+     }
+
+     @AfterClass
+     public static void afterSuite() {
+         close();
      }
  }
