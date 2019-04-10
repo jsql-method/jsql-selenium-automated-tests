@@ -26,7 +26,7 @@
          SelenideElement password = $(By.xpath("//input[@type='password']"));
          password.setValue(userPassword);
          password.pressEnter();
-         Thread.sleep(1000);
+         Thread.sleep(3000);
      }
 
      public Map<String, Boolean> resultMap() {
@@ -82,6 +82,7 @@
          //getDriver selenium and go to homepage
          Configuration.browser = "firefox";
          Configuration.timeout = 15000;
+         Configuration.headless=true;
 
          open("https://customer.jsql.it/auth/login");
          getWebDriver().manage().window().maximize();

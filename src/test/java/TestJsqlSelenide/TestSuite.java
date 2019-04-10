@@ -5,11 +5,6 @@
 
 package TestJsqlSelenide;
 
-//import TestJsqlJunit.AddAdminTest;
-//import TestJsqlJunit.AddNewMemberTest;
-//import TestJsqlJunit.CopyToClipboardTest;
-//import TestJsqlJunit.EditProfileTest;
-import TestJsqlJunit.Register;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 

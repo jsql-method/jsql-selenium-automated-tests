@@ -21,6 +21,7 @@ import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 //         WebDriverRunner.getWebDriver() = SetUp.getDriver();
          Configuration.browser="firefox";
          Configuration.timeout = 15000;
+         Configuration.headless=true;
 
          open("https://customer.jsql.it/auth/login");
          getWebDriver().manage().window().maximize();
