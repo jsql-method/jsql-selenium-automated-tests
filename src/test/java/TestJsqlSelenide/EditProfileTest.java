@@ -6,10 +6,7 @@
  package TestJsqlSelenide;
 
  import com.codeborne.selenide.Configuration;
- import org.junit.AfterClass;
- import org.junit.Assert;
- import org.junit.Before;
- import org.junit.Test;
+ import org.junit.*;
  import org.openqa.selenium.By;
  import org.openqa.selenium.Keys;
  import org.openqa.selenium.WebElement;
@@ -25,27 +22,15 @@
      String correctNewPassword = "Selenium123#";
      String incorrectPassword = "selenium";
 
-     @Before
-     public void setUp() {
+     @BeforeClass
+     public static void setUp() {
          //getDriver selenium and login into homepage
-//         WebDriverRunner.getWebDriver() = SetUp.getDriver();
-         Configuration.browser = "firefox";
-         Configuration.timeout = 15000;
-         Configuration.headless=true;
-
-         open("https://customer.jsql.it/auth/login");
-         getWebDriver().manage().window().maximize();
-
-         //login into page
-         String userEmail = "jsql@5-mail.info";
-         String userPassword = "test123#";
-         $(By.xpath("//input[@type='text']")).setValue(userEmail);
-         $(By.xpath("//input[@type='password']")).setValue(userPassword).pressEnter();
+         SetUp.getDriver();
      }
 
      @Test
-     public void EditName() throws InterruptedException {
-         $(By.xpath("//a[contains(@data-target,'#profile')]")).click();
+     public void EditName() {
+//         $(By.xpath("//a[contains(@data-target,'#profile')]")).click();
          $(By.xpath("//a[@href='/profile'][contains(.,'Profile')]")).click();
 
          //Check actual value
@@ -77,12 +62,12 @@
          $(By.xpath("//button[@type='button'][contains(.,'Ok')]")).click();
 
          Assert.assertTrue("Not true", ("SeleniumName".equals(newNameValue)) && ("SeleniumSurname".equals(newSurnameValue)));
-         close();
+//         close();
      }
 
      @Test
      public void ChangePasswordWithIncorrectData() {
-         $(By.xpath("//a[contains(@data-target,'#profile')]")).click();
+//         $(By.xpath("//a[contains(@data-target,'#profile')]")).click();
          $(By.xpath("//a[@href='/profile'][contains(.,'Profile')]")).click();
 
          //change password with incorrect data
@@ -121,11 +106,11 @@
          //check if message is displayed
          $(By.xpath("//div[@class='contain-validation-contain-profile ng-binding'][contains(.,'Old password is incorrect')]")).shouldBe(visible);
 
-         close();
+//         close();
      }
 
      @Test
-     public void ChangePasswordWithCorrectData() throws InterruptedException {
+     public void ChangePasswordWithCorrectData() {
          $(By.xpath("//a[contains(@data-target,'#profile')]")).click();
          $(By.xpath("//a[@href='/profile'][contains(.,'Profile')]")).click();
 
@@ -163,7 +148,7 @@
          $(By.xpath("//button[contains(.,'Submit')]")).click();
          $(By.xpath("//button[contains(.,'Ok')]")).click();
 
-         close();
+//         close();
      }
 
      @AfterClass

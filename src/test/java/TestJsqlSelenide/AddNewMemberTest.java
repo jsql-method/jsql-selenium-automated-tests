@@ -5,41 +5,24 @@
 
  package TestJsqlSelenide;
 
- import com.codeborne.selenide.Configuration;
  import com.codeborne.selenide.ElementsCollection;
- import org.junit.AfterClass;
- import org.junit.Assert;
- import org.junit.BeforeClass;
- import org.junit.Test;
+ import org.junit.*;
  import org.openqa.selenium.By;
 
  import static com.codeborne.selenide.Condition.exist;
  import static com.codeborne.selenide.Selenide.*;
- import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 
  public class AddNewMemberTest {
 
 
      @BeforeClass
      public static void setUp() {
-         //getDriver selenium and login into homepage
-//         WebDriverRunner.getWebDriver() = SetUp.getDriver();
-         Configuration.browser = "firefox";
-         Configuration.timeout = 15000;
-         Configuration.headless=true;
-
-         open("https://customer.jsql.it/auth/login");
-         getWebDriver().manage().window().maximize();
-
-         //login into page
-         String userEmail = "test@test";
-         String userPassword = "test123";
-         $(By.xpath("//input[@type='text']")).setValue(userEmail);
-         $(By.xpath("//input[@type='password']")).setValue(userPassword).pressEnter();
+         //getDriver selenide and login into homepage
+         SetUp.getDriver();
      }
 
      @Test
-     public void addNewMember() throws InterruptedException {
+     public void addNewMember() {
          $(By.xpath("(//a[contains(.,'Team')])[1]")).click();
 
          int numberOfMembers = $$(By.xpath("(//td[@class='description-overflow ng-binding'])")).size();
@@ -64,7 +47,7 @@
      }
 
      @Test
-     public void addExistingMember() throws InterruptedException {
+     public void addExistingMember() {
          $(By.xpath("(//a[contains(.,'Team')])[1]")).click();
 
          //check number of members

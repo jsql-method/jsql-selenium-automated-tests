@@ -5,8 +5,6 @@
 
  package TestJsqlSelenide;
 
- import TestJsqlJunit.SetUp;
- import com.codeborne.selenide.Configuration;
  import com.codeborne.selenide.SelenideElement;
  import org.junit.*;
  import org.openqa.selenium.*;
@@ -16,8 +14,6 @@
 
  import static com.codeborne.selenide.Selenide.$;
  import static com.codeborne.selenide.Selenide.close;
- import static com.codeborne.selenide.Selenide.open;
- import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 
  public class ElementsPresentDependingOnRoleTest {
 
@@ -80,12 +76,7 @@
      @Before
      public void setUp() {
          //getDriver selenium and go to homepage
-         Configuration.browser = "firefox";
-         Configuration.timeout = 15000;
-         Configuration.headless=true;
-
-         open("https://customer.jsql.it/auth/login");
-         getWebDriver().manage().window().maximize();
+         SetUp.getDriverOnly();
      }
 
      @Test

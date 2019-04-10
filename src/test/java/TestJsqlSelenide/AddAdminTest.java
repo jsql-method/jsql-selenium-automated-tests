@@ -5,41 +5,23 @@
 
  package TestJsqlSelenide;
 
- import TestJsqlJunit.SetUp;
- import com.codeborne.selenide.Configuration;
- import org.junit.AfterClass;
- import org.junit.Assert;
- import org.junit.BeforeClass;
- import org.junit.Test;
+ import org.junit.*;
  import org.openqa.selenium.By;
 
  import static com.codeborne.selenide.Condition.exist;
  import static com.codeborne.selenide.Condition.visible;
  import static com.codeborne.selenide.Selenide.*;
- import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 
  public class AddAdminTest {
 
      @BeforeClass
      public static void setUp() {
-         //getDriver selenium and login into homepage
-//         WebDriverRunner.getWebDriver() = SetUp.getDriver();
-         Configuration.browser = "firefox";
-         Configuration.timeout = 15000;
-         Configuration.headless=true;
-
-         open("https://customer.jsql.it/auth/login");
-         getWebDriver().manage().window().maximize();
-
-         //login into page
-         String userEmail = "jsql@5-mail.info";
-         String userPassword = "test123#";
-         $(By.xpath("//input[@type='text']")).setValue(userEmail);
-         $(By.xpath("//input[@type='password']")).setValue(userPassword).pressEnter();
+         //getDriver selenide and login into homepage
+         SetUp.getDriver();
      }
 
      @Test
-     public void addNewAdminTest() throws InterruptedException {
+     public void addNewAdminTest() {
          $(By.xpath("//a[contains(.,'Admins')]")).click();
 
          int numberOfAdmins = $$(By.xpath("(//td[@class='description-overflow ng-binding'])")).size();
@@ -65,7 +47,7 @@
      }
 
      @Test
-     public void demoteAdminTest() throws InterruptedException {
+     public void demoteAdminTest() {
          $(By.xpath("//a[contains(.,'Admins')]")).click();
 
          //Add new admin
@@ -102,7 +84,7 @@
      }
 
      @Test
-     public void promoteToAdmin() throws InterruptedException {
+     public void promoteToAdmin() {
          $(By.xpath("(//a[contains(.,'Team')])[1]")).click();
 
          //Add member
@@ -132,7 +114,7 @@
      }
 
      @Test
-     public void addExistingAdmin() throws InterruptedException {
+     public void addExistingAdmin() {
          $(By.xpath("//a[contains(.,'Admins')]")).click();
 
          //check number of admins

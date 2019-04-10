@@ -5,31 +5,19 @@
 
  package TestJsqlSelenide;
 
- import TestJsqlJunit.SetUp;
- import com.codeborne.selenide.Configuration;
- import org.junit.AfterClass;
- import org.junit.Assert;
- import org.junit.Before;
- import org.junit.Test;
+ import org.junit.*;
  import org.openqa.selenium.By;
  import org.openqa.selenium.Keys;
  import org.openqa.selenium.WebElement;
 
  import static com.codeborne.selenide.Selenide.*;
- import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 
  public class CopyToClipboardTest {
 
      @Before
      public void setUp() {
          //getDriver selenium and login into homepage
-//         WebDriverRunner.getWebDriver() = SetUp.getDriver();
-         Configuration.browser = "firefox";
-         Configuration.timeout = 15000;
-         Configuration.headless=true;
-
-         open("https://customer.jsql.it/auth/login");
-         getWebDriver().manage().window().maximize();
+         SetUp.getDriverOnly();
 
          //login into page
          String userEmail = "jsql2@5-mail.info";
