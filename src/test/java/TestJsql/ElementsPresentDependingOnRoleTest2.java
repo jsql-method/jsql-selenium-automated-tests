@@ -39,43 +39,43 @@ public class ElementsPresentDependingOnRoleTest2 {
         //check if some element is present
         Boolean isUsersPresent = driver.findElements(By.xpath("//div[@class='ng-binding'][contains(.,'Users:')]")).size() > 0;
         resultMap.put("isUsersPresent", isUsersPresent);
-        System.out.println("isUsersPresent: " + isUsersPresent);
+//        System.out.println("isUsersPresent: " + isUsersPresent);
 
         //check if 'Apps' is displayed
         Boolean isAppsPresent = driver.findElements(By.xpath("//a[contains(.,'Applications')]")).size() > 0;
         resultMap.put("isAppsPresent", isAppsPresent);
-        System.out.println("isAppsPresent: " + isAppsPresent);
+//        System.out.println("isAppsPresent: " + isAppsPresent);
 
         //check if 'DevKey' section is available
         Boolean isDevKeyPresent = driver.findElements(By.xpath("(//*[@class='icon icon-developer-key'])")).size() > 0;
         resultMap.put("isDevKeyPresent", isDevKeyPresent);
-        System.out.println("isDevKeyPresent: " + isDevKeyPresent);
+//        System.out.println("isDevKeyPresent: " + isDevKeyPresent);
 
         //check if 'AddNewApi' in Application section is available
         clickWhenReady(By.xpath("//a[contains(.,'Applications')]"));
         Boolean isAddNewApiPresent = driver.findElements(By.xpath("//a[contains(.,'Add App')]")).size() > 0;
         resultMap.put("isAddNewApiPresent", isAddNewApiPresent);
-        System.out.println("isAddNewApiPresent: " + isAddNewApiPresent);
+//        System.out.println("isAddNewApiPresent: " + isAddNewApiPresent);
 
         //check if 'Security' section is available
         Boolean isSecurityPresent = driver.findElements(By.xpath("//a[contains(.,'Security')]")).size() > 0;
         resultMap.put("isSecurityPresent", isSecurityPresent);
-        System.out.println("isSecurityPresent: " + isSecurityPresent);
+//        System.out.println("isSecurityPresent: " + isSecurityPresent);
 
         //check if 'Team' section is available
         Boolean isTeamPresent = driver.findElements(By.xpath("//a[contains(.,'Team')]")).size() > 0;
         resultMap.put("isTeamPresent", isTeamPresent);
-        System.out.println("isTeamPresent: " + isTeamPresent);
+//        System.out.println("isTeamPresent: " + isTeamPresent);
 
         //check if 'Admins' section is available
         Boolean isAdminsPresent = driver.findElements(By.xpath("//a[contains(.,'Admins')]")).size() > 0;
         resultMap.put("isAdminsPresent", isAdminsPresent);
-        System.out.println("isAdminsPresent: " + isAdminsPresent);
+//        System.out.println("isAdminsPresent: " + isAdminsPresent);
 
         //check if 'Billing' section is available
         Boolean isBillingPresent = driver.findElements(By.xpath("//a[contains(.,'Billing')]")).size() > 0;
         resultMap.put("isBillingPresent", isBillingPresent);
-        System.out.println("isBillingPresent: " + isBillingPresent);
+//        System.out.println("isBillingPresent: " + isBillingPresent);
 
         return resultMap;
     }

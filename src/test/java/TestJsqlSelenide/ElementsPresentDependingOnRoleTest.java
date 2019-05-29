@@ -6,7 +6,9 @@
  package TestJsqlSelenide;
 
  import com.codeborne.selenide.SelenideElement;
+ import com.codeborne.selenide.junit.TextReport;
  import org.junit.*;
+ import org.junit.rules.TestRule;
  import org.openqa.selenium.*;
 
  import java.util.HashMap;
@@ -16,6 +18,9 @@
  import static com.codeborne.selenide.Selenide.close;
 
  public class ElementsPresentDependingOnRoleTest {
+
+     @Rule
+     public TestRule report = new TextReport();
 
      public void loginToPage(String userEmail, String userPassword) throws InterruptedException {
          $(By.xpath("//input[@type='text']")).setValue(userEmail);

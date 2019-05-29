@@ -2,11 +2,13 @@ package Selenide;
 
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.WebDriverRunner;
+import com.codeborne.selenide.junit.TextReport;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TestRule;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.firefox.FirefoxProfile;
@@ -14,8 +16,10 @@ import org.openqa.selenium.firefox.FirefoxProfile;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.confirm;
 import static com.codeborne.selenide.Selenide.open;
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
+import static com.codeborne.selenide.WebDriverRunner.setWebDriver;
 
 public class LottoSelenide {
 
@@ -28,15 +32,17 @@ public class LottoSelenide {
     public int num4 = 35;
     public int num5 = 38;
 
+    @Rule
+    public TestRule report = new TextReport();
+
     @Test
     public void checkGoogleSearch() throws InterruptedException {
 
 
         System.setProperty("selenide.timeout ", "20000");
         Configuration.browser="firefox";
-//        Configuration.headless=true;
         Configuration.reopenBrowserOnFail=true;
-        Configuration.driverManagerEnabled=true;
+//        Configuration.driverManagerEnabled=true;
 
         FirefoxProfile profile = new FirefoxProfile();
         profile.setPreference("geo.enabled", true);
@@ -83,11 +89,13 @@ public class LottoSelenide {
 
         $(By.xpath("//button[@class='btn btn-primary'][contains(.,'POTWIERDŹ I ZAPŁAĆ')]")).click();
         $(By.xpath("//a[@class='btn btn-primary confirmationModal-confirmLink'][contains(.,'POTWIERDZAM I PŁACĘ')]")).click();
-
-        //get coupon numbers
-        WebElement couponNumberElement = $(By.xpath("//*[@id=\"confirmationItem1\"]/div/div/div[2]/div[1]"));
-        String couponNumber = couponNumberElement.getText().split(":")[1];
-        System.out.println(couponNumber);
-        driver.close();
+//
+//        //get coupon numbers
+//        WebElement couponNumberElement = $(By.xpath("//*[@id=\"confirmationItem1\"]/div/div/div[2]/div[1]"));
+//        String couponNumber = couponNumberElement.getText().split(":")[1];
+//        System.out.println(couponNumber);
+        System.out.println("before close check");
+        WebDriverRunner.getWebDriver().close();
+//        close();
     }
 }

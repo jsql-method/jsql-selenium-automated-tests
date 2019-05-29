@@ -45,7 +45,7 @@ public class Register2 {
         String randMail = (randNum + "@next2cloud.info");
 
         //register new account using copied mail name
-        driver.get("http://localhost:9090/auth/register");
+        driver.get("https://test.jsql.it/auth/login/register");
         Thread.sleep(500);
         getWhenVisible(By.xpath("//input[@placeholder='Email']")).sendKeys(randMail);
         getWhenVisible(By.xpath("//input[@placeholder='Password']")).sendKeys("test123#");
@@ -69,7 +69,7 @@ public class Register2 {
         String childWindow = driver.getWindowHandle();
         driver.switchTo().window(childWindow);
 
-        driver.get("http://localhost:9090/auth/login");
+        driver.get("https://test.jsql.it/auth/login");
 
         getWhenVisible(By.xpath("//input[@type='text']")).sendKeys(randMail);
         WebElement password = driver.findElement(By.xpath("//input[@type='password']"));

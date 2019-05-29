@@ -5,12 +5,17 @@
 
 package TestJsqlSelenide;
 
+import com.codeborne.selenide.junit.TextReport;
 import org.junit.*;
+import org.junit.rules.TestRule;
 import org.openqa.selenium.By;
 
 import static com.codeborne.selenide.Selenide.*;
 
  public class AddApiTest {
+
+     @Rule
+     public TestRule report = new TextReport();
 
      @BeforeClass
      public static void setUp() {
@@ -24,7 +29,7 @@ import static com.codeborne.selenide.Selenide.*;
          //check number of api keys
          $(By.xpath("//a[contains(.,'Applications')]")).click();
          int numberOfApi = $$(By.xpath("(//a[@class='ng-binding'])")).size();
-         $(By.xpath("//a[contains(.,'Add App')]")).click();
+         $(By.xpath("//a[contains(.,'Add application')]")).click();
 
          //Add new api
          $(By.xpath("//input[@placeholder='Name']")).setValue("selenium");

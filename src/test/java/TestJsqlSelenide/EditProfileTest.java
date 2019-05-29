@@ -6,7 +6,9 @@
  package TestJsqlSelenide;
 
  import com.codeborne.selenide.Configuration;
+ import com.codeborne.selenide.junit.TextReport;
  import org.junit.*;
+ import org.junit.rules.TestRule;
  import org.openqa.selenium.By;
  import org.openqa.selenium.Keys;
  import org.openqa.selenium.WebElement;
@@ -21,6 +23,9 @@
      String oldPassword = "test123#";
      String correctNewPassword = "Selenium123#";
      String incorrectPassword = "selenium";
+
+     @Rule
+     public TestRule report = new TextReport();
 
      @BeforeClass
      public static void setUp() {

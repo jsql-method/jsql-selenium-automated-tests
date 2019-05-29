@@ -5,7 +5,9 @@
 
  package TestJsqlSelenide;
 
+ import com.codeborne.selenide.junit.TextReport;
  import org.junit.*;
+ import org.junit.rules.TestRule;
  import org.openqa.selenium.By;
  import org.openqa.selenium.Keys;
  import org.openqa.selenium.WebElement;
@@ -13,6 +15,9 @@
  import static com.codeborne.selenide.Selenide.*;
 
  public class CopyToClipboardTest {
+
+     @Rule
+     public TestRule report = new TextReport();
 
      @Before
      public void setUp() {

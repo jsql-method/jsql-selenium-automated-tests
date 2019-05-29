@@ -6,7 +6,9 @@
  package TestJsqlSelenide;
 
  import com.codeborne.selenide.ElementsCollection;
+ import com.codeborne.selenide.junit.TextReport;
  import org.junit.*;
+ import org.junit.rules.TestRule;
  import org.openqa.selenium.By;
 
  import static com.codeborne.selenide.Condition.exist;
@@ -14,6 +16,8 @@
 
  public class AddNewMemberTest {
 
+     @Rule
+     public TestRule report = new TextReport();
 
      @BeforeClass
      public static void setUp() {

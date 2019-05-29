@@ -45,6 +45,10 @@ public class SetUp {
             return false;
         }
     }
+    public static void elementNotDisplayed(By locator) {
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(locator));
+    }
 
     public static WebDriver getDriverParam(String browser, String user) {
 

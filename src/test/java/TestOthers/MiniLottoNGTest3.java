@@ -1,15 +1,19 @@
 package TestOthers;
 
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import org.openqa.selenium.*;
-import org.openqa.selenium.firefox.*;
-import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 
-public class MiniLotto {
+public class MiniLottoNGTest3 {
 
     public static WebDriver driver;
     public String login = "dsenko";
@@ -43,7 +47,7 @@ public class MiniLotto {
         wait.until(ExpectedConditions.invisibilityOfElementLocated(locator));
     }
 
-    @BeforeClass
+    @BeforeMethod
     public static void setUp() {
 
 //        geoEnabled.setPreference("geo.wifi.uri", "C:/Users/CP24/Desktop/projekt/jsql-selenium-automated-tests/geoLocation.json");
@@ -82,7 +86,23 @@ public class MiniLotto {
         getWhenVisible(By.xpath("//input[@name='loginModal-username']")).sendKeys(login);
         WebElement passwordInput = driver.findElement(By.xpath("//input[@type='password']"));
         passwordInput.sendKeys(password);
+
+        while (getWhenVisible(By.xpath("(//div[contains(.,'Serwer tymczasowo niedostępny. Spróbuj ponownie później.')])[14]")).isDisplayed()) {
+            Thread.sleep(10000);
+        }
         passwordInput.sendKeys(Keys.ENTER);
+//        try {
+//            passwordInput.sendKeys(Keys.ENTER);
+//        } catch (Exception as){
+//            Thread.sleep(10000);
+//        } finally {
+//            passwordInput.sendKeys(Keys.ENTER);
+//        }
+
+
+        if (getWhenVisible(By.xpath("(//div[contains(.,'Serwer tymczasowo niedostępny. Spróbuj ponownie później.')])[14]")).isDisplayed())
+            Thread.sleep(10000);
+            passwordInput.sendKeys(Keys.ENTER);
 
         Thread.sleep(500);
         clickWhenReady(By.xpath("(//button[@class='btn btn-primary'][contains(.,'Zamknij')])[2]"));
@@ -92,7 +112,7 @@ public class MiniLotto {
         Thread.sleep(1000);
         clickWhenReady(By.xpath("//a[contains(.,'Gry LOTTO')]"));
         Thread.sleep(500);
-        clickWhenReady(By.xpath("//div[@class='game-image'][contains(.,'Play Mini Lott000007777o')]"));
+        clickWhenReady(By.xpath("/html/body/div[2]/div[2]/div[4]/div/div/div/div/nav/div[2]/ul/li[3]/div/ul/li[3]/a"));
 
         //fill up form (random numbers OFF, only one coupon)
         clickWhenReady(By.xpath("//label[contains(@data-switch-on,'TAK')]"));
@@ -110,6 +130,7 @@ public class MiniLotto {
         getWhenVisible(By.xpath("//input[@name='boards[0][primarySelections][4]']")).sendKeys(String.valueOf(num5));
 
         //confirm
+        Thread.sleep(500);
         clickWhenReady(By.xpath("//button[@class='btn btn-primary'][contains(.,'POTWIERDŹ I ZAPŁAĆ')]"));
         elementNotDisplayed(By.xpath("//button[@class='btn btn-primary'][contains(.,'POTWIERDŹ I ZAPŁAĆ')]"));
         System.out.println("check :D");
@@ -122,7 +143,7 @@ public class MiniLotto {
         //Numer kuponu:
         //I600000-10153-1294526-1-10
         WebElement couponNumberElement = getWhenVisible(By.xpath("//*[@id=\"confirmationItem1\"]/div/div/div[2]/div[1]"));
-        String couponNumber = couponNumberElement.getText().split(":")[1];
+        String couponNumber = couponNumberElement.getText();
         System.out.println(couponNumber);
 
         //getting text like:
@@ -141,87 +162,88 @@ public class MiniLotto {
 
     }
 
-    @Test
-    public void Lotto() throws InterruptedException {
-
-        //go to lotto webside
-        driver.get("https://gry.lotto.pl/pl/home.html");
-        Thread.sleep(500);
-
-        //pop ups
-        clickWhenReady(By.xpath("(//div[@class='btn btn-primary'][contains(.,'akceptuję')])[2]"));
-        elementNotDisplayed(By.xpath("(//div[@class='btn btn-primary'][contains(.,'akceptuję')])[2]"));
-        clickWhenReady(By.xpath("(//button[@class='btn btn-primary'][contains(.,'Potwierdź')])[2]"));
-        elementNotDisplayed(By.xpath("(//button[@class='btn btn-primary'][contains(.,'Potwierdź')])[2]"));
-        Thread.sleep(1000);
-
-
-        //login
-        clickWhenReady(By.xpath("//a[@class='btn btn-login btn-account-header br-0'][contains(.,'Zaloguj się')]"));
-
-        getWhenVisible(By.xpath("//input[@name='loginModal-username']")).sendKeys(login);
-        WebElement passwordInput = driver.findElement(By.xpath("//input[@type='password']"));
-        passwordInput.sendKeys(password);
-        passwordInput.sendKeys(Keys.ENTER);
-
-        Thread.sleep(1000);
-        clickWhenReady(By.xpath("(//button[@class='btn btn-primary'][contains(.,'Zamknij')])[2]"));
-        elementNotDisplayed(By.xpath("(//button[@class='btn btn-primary'][contains(.,'Zamknij')])[2]"));
-
-        //go to lotto
-        Thread.sleep(1000);
-        clickWhenReady(By.xpath("//a[contains(.,'Gry LOTTO')]"));
-        Thread.sleep(500);
-        clickWhenReady(By.xpath("//div[@class='game-image'][contains(.,'Play lotto')]"));
-
-        //fill up form (random numbers OFF, only one coupon, 'Graj z plusem' OFF)
-        clickWhenReady(By.xpath("//label[contains(@data-switch-on,'TAK')]"));
-        clickWhenReady(By.xpath("//label[@for='plusSwitch']"));
-        clickWhenReady(By.xpath("(//span[contains(.,'zakład')])[3]"));
-        Thread.sleep(1000);
-        clickWhenReady(By.xpath("(//span[contains(.,'zakład')])[2]"));
-
-        //input numbers
-        getWhenVisible(By.xpath("//input[@name='boards[0][primarySelections][0]']")).sendKeys(String.valueOf(num1));
-        getWhenVisible(By.xpath("//input[@name='boards[0][primarySelections][1]']")).sendKeys(String.valueOf(num2));
-        getWhenVisible(By.xpath("//input[@name='boards[0][primarySelections][2]']")).sendKeys(String.valueOf(num3));
-        getWhenVisible(By.xpath("//input[@name='boards[0][primarySelections][3]']")).sendKeys(String.valueOf(num4));
-        getWhenVisible(By.xpath("//input[@name='boards[0][primarySelections][4]']")).sendKeys(String.valueOf(num5));
-        getWhenVisible(By.xpath("//input[@name='boards[0][primarySelections][5]']")).sendKeys(String.valueOf(num6));
-
-        //confirm
-        clickWhenReady(By.xpath("//button[@class='btn btn-primary'][contains(.,'POTWIERDŹ I ZAPŁAĆ')]"));
-        elementNotDisplayed(By.xpath("//button[@class='btn btn-primary'][contains(.,'POTWIERDŹ I ZAPŁAĆ')]"));
-        clickWhenReady(By.xpath("//a[@class='btn btn-primary confirmationModal-confirmLink'][contains(.,'POTWIERDZAM I PŁACĘ')]"));
-        elementNotDisplayed(By.xpath("//a[@class='btn btn-primary confirmationModal-confirmLink'][contains(.,'POTWIERDZAM I PŁACĘ')]"));
-
-        //get coupon number and chosen numbers
-        Thread.sleep(500);
-        //getting text like:
-        //Numer kuponu:
-        //I600000-10153-1294526-1-10
-        WebElement couponNumberElement = getWhenVisible(By.xpath("//*[@id=\"confirmationItem1\"]/div/div/div[2]/div[1]"));
-        String couponNumber = couponNumberElement.getText().split(":")[1];
-        System.out.println(couponNumber);
-
-        //getting text like:
-        //5, 11, 22, 35, 42, 7
-        WebElement chosenNumbersElement1 = getWhenVisible(By.xpath("//*[@id=\"confirmationItem1\"]/div/div/div[1]/div/span[2]/i"));
-        WebElement chosenNumbersElement2 = getWhenVisible(By.xpath("//*[@id=\"confirmationItem1\"]/div/div/div[1]/div/span[3]/i"));
-        WebElement chosenNumbersElement3 = getWhenVisible(By.xpath("//*[@id=\"confirmationItem1\"]/div/div/div[1]/div/span[4]/i"));
-        WebElement chosenNumbersElement4 = getWhenVisible(By.xpath("//*[@id=\"confirmationItem1\"]/div/div/div[1]/div/span[5]/i"));
-        WebElement chosenNumbersElement5 = getWhenVisible(By.xpath("//*[@id=\"confirmationItem1\"]/div/div/div[1]/div/span[6]/i"));
-        WebElement chosenNumbersElement6 = getWhenVisible(By.xpath("//*[@id=\"confirmationItem1\"]/div/div/div[1]/div/span[7]/i"));
-        String chosenNumber1 = chosenNumbersElement1.getText();
-        String chosenNumber2 = chosenNumbersElement2.getText();
-        String chosenNumber3 = chosenNumbersElement3.getText();
-        String chosenNumber4 = chosenNumbersElement4.getText();
-        String chosenNumber5 = chosenNumbersElement5.getText();
-        String chosenNumber6 = chosenNumbersElement6.getText();
-        System.out.println(chosenNumber1 + ", " + chosenNumber2 + ", " + chosenNumber3 + ", " + chosenNumber4 + ", " + chosenNumber5 + ", " + chosenNumber6);
-
-    }
-
+//    @Test
+//    public void Lotto() throws InterruptedException {
+//
+//        //go to lotto webside
+//        driver.get("https://gry.lotto.pl/pl/home.html");
+//        Thread.sleep(500);
+//
+//        //pop ups
+//        clickWhenReady(By.xpath("(//div[@class='btn btn-primary'][contains(.,'akceptuję')])[2]"));
+//        elementNotDisplayed(By.xpath("(//div[@class='btn btn-primary'][contains(.,'akceptuję')])[2]"));
+//        clickWhenReady(By.xpath("(//button[@class='btn btn-primary'][contains(.,'Potwierdź')])[2]"));
+//        elementNotDisplayed(By.xpath("(//button[@class='btn btn-primary'][contains(.,'Potwierdź')])[2]"));
+//        Thread.sleep(1000);
+//
+//
+//        //login
+//        clickWhenReady(By.xpath("//a[@class='btn btn-login btn-account-header br-0'][contains(.,'Zaloguj się')]"));
+//
+//        getWhenVisible(By.xpath("//input[@name='loginModal-username']")).sendKeys(login);
+//        WebElement passwordInput = driver.findElement(By.xpath("//input[@type='password']"));
+//        passwordInput.sendKeys(password);
+//        passwordInput.sendKeys(Keys.ENTER);
+//
+//        Thread.sleep(1000);
+//        clickWhenReady(By.xpath("(//button[@class='btn btn-primary'][contains(.,'Zamknij')])[2]"));
+//        elementNotDisplayed(By.xpath("(//button[@class='btn btn-primary'][contains(.,'Zamknij')])[2]"));
+//
+//        //go to lotto
+//        Thread.sleep(1000);
+//        clickWhenReady(By.xpath("//a[contains(.,'Gry LOTTO')]"));
+//        Thread.sleep(500);
+//        clickWhenReady(By.xpath("/html/body/div[2]/div[2]/div[4]/div/div/div/div/nav/div[2]/ul/li[3]/div/ul/li[1]/a"));
+//
+//        //fill up form (random numbers OFF, only one coupon, 'Graj z plusem' OFF)
+//        clickWhenReady(By.xpath("//label[contains(@data-switch-on,'TAK')]"));
+//        clickWhenReady(By.xpath("//label[@for='plusSwitch']"));
+//        clickWhenReady(By.xpath("(//span[contains(.,'zakład')])[3]"));
+//        Thread.sleep(1000);
+//        clickWhenReady(By.xpath("(//span[contains(.,'zakład')])[2]"));
+//
+//        //input numbers
+//        getWhenVisible(By.xpath("//input[@name='boards[0][primarySelections][0]']")).sendKeys(String.valueOf(num1));
+//        getWhenVisible(By.xpath("//input[@name='boards[0][primarySelections][1]']")).sendKeys(String.valueOf(num2));
+//        getWhenVisible(By.xpath("//input[@name='boards[0][primarySelections][2]']")).sendKeys(String.valueOf(num3));
+//        getWhenVisible(By.xpath("//input[@name='boards[0][primarySelections][3]']")).sendKeys(String.valueOf(num4));
+//        getWhenVisible(By.xpath("//input[@name='boards[0][primarySelections][4]']")).sendKeys(String.valueOf(num5));
+//        getWhenVisible(By.xpath("//input[@name='boards[0][primarySelections][5]']")).sendKeys(String.valueOf(num6));
+//
+//        //confirm
+//        clickWhenReady(By.xpath("//button[@class='btn btn-primary'][contains(.,'POTWIERDŹ I ZAPŁAĆ')]"));
+//        elementNotDisplayed(By.xpath("//button[@class='btn btn-primary'][contains(.,'POTWIERDŹ I ZAPŁAĆ')]"));
+//        System.out.println("check :D");
+////        clickWhenReady(By.xpath("//a[@class='btn btn-primary confirmationModal-confirmLink'][contains(.,'POTWIERDZAM I PŁACĘ')]"));
+////        elementNotDisplayed(By.xpath("//a[@class='btn btn-primary confirmationModal-confirmLink'][contains(.,'POTWIERDZAM I PŁACĘ')]"));
+//
+//        //get coupon number and chosen numbers
+//        Thread.sleep(500);
+//        //getting text like:
+//        //Numer kuponu:
+//        //I600000-10153-1294526-1-10
+//        WebElement couponNumberElement = getWhenVisible(By.xpath("//*[@id=\"confirmationItem1\"]/div/div/div[2]/div[1]"));
+//        String couponNumber = couponNumberElement.getText();
+//        System.out.println(couponNumber);
+//
+//        //getting text like:
+//        //5, 11, 22, 35, 42, 7
+//        WebElement chosenNumbersElement1 = getWhenVisible(By.xpath("//*[@id=\"confirmationItem1\"]/div/div/div[1]/div/span[2]/i"));
+//        WebElement chosenNumbersElement2 = getWhenVisible(By.xpath("//*[@id=\"confirmationItem1\"]/div/div/div[1]/div/span[3]/i"));
+//        WebElement chosenNumbersElement3 = getWhenVisible(By.xpath("//*[@id=\"confirmationItem1\"]/div/div/div[1]/div/span[4]/i"));
+//        WebElement chosenNumbersElement4 = getWhenVisible(By.xpath("//*[@id=\"confirmationItem1\"]/div/div/div[1]/div/span[5]/i"));
+//        WebElement chosenNumbersElement5 = getWhenVisible(By.xpath("//*[@id=\"confirmationItem1\"]/div/div/div[1]/div/span[6]/i"));
+//        WebElement chosenNumbersElement6 = getWhenVisible(By.xpath("//*[@id=\"confirmationItem1\"]/div/div/div[1]/div/span[7]/i"));
+//        String chosenNumber1 = chosenNumbersElement1.getText();
+//        String chosenNumber2 = chosenNumbersElement2.getText();
+//        String chosenNumber3 = chosenNumbersElement3.getText();
+//        String chosenNumber4 = chosenNumbersElement4.getText();
+//        String chosenNumber5 = chosenNumbersElement5.getText();
+//        String chosenNumber6 = chosenNumbersElement6.getText();
+//        System.out.println(chosenNumber1 + ", " + chosenNumber2 + ", " + chosenNumber3 + ", " + chosenNumber4 + ", " + chosenNumber5 + ", " + chosenNumber6);
+//
+//    }
+//
 //    @Test
 //    public void EuroJackpot() throws InterruptedException {
 //
@@ -253,7 +275,7 @@ public class MiniLotto {
 //        Thread.sleep(1000);
 //        clickWhenReady(By.xpath("//a[contains(.,'Gry LOTTO')]"));
 //        Thread.sleep(500);
-//        clickWhenReady(By.xpath("(//div[contains(@class,'game-image')])[8]"));
+//        clickWhenReady(By.xpath("/html/body/div[2]/div[2]/div[4]/div/div/div/div/nav/div[2]/ul/li[3]/div/ul/li[2]/a"));
 //
 //        //fill up form (random numbers OFF, only one coupon)
 //        clickWhenReady(By.xpath("//label[contains(@data-switch-on,'TAK')]"));
@@ -272,16 +294,17 @@ public class MiniLotto {
 //        //confirm
 //        clickWhenReady(By.xpath("//button[@class='btn btn-primary'][contains(.,'POTWIERDŹ I ZAPŁAĆ')]"));
 //        elementNotDisplayed(By.xpath("//button[@class='btn btn-primary'][contains(.,'POTWIERDŹ I ZAPŁAĆ')]"));
-//        clickWhenReady(By.xpath("//a[@class='btn btn-primary confirmationModal-confirmLink'][contains(.,'POTWIERDZAM I PŁACĘ')]"));
-//        elementNotDisplayed(By.xpath("//a[@class='btn btn-primary confirmationModal-confirmLink'][contains(.,'POTWIERDZAM I PŁACĘ')]"));
-
+//        System.out.println("check :D");
+////        clickWhenReady(By.xpath("//a[@class='btn btn-primary confirmationModal-confirmLink'][contains(.,'POTWIERDZAM I PŁACĘ')]"));
+////        elementNotDisplayed(By.xpath("//a[@class='btn btn-primary confirmationModal-confirmLink'][contains(.,'POTWIERDZAM I PŁACĘ')]"));
+//
 //        //get coupon number and chosen numbers
 //        Thread.sleep(500);
 //        //getting text like:
 //        //Numer kuponu:
 //        //I600000-10153-1294526-1-10
 //        WebElement couponNumberElement = getWhenVisible(By.xpath("//*[@id=\"confirmationItem1\"]/div/div/div[2]/div[1]"));
-//        String couponNumber = couponNumberElement.getText().split(":")[1];
+//        String couponNumber = couponNumberElement.getText();
 //        System.out.println(couponNumber);
 //
 //        //getting text like:
@@ -304,7 +327,7 @@ public class MiniLotto {
 //
 //    }
 
-    @AfterClass
+    @AfterMethod
     public static void afterSuite() {
         driver.quit();
     }
